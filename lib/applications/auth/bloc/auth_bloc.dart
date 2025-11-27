@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:login_app_bloc_freezed/infrastructure/authservices/authentication_api.dart';
 import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
@@ -19,20 +20,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           "username": event.authrequestmodel.username,
           "password": event.authrequestmodel.password,
         };
-
+        final storage = FlutterSecureStorage();
         Response res = await AuthenticationApi().authpost(formData);
         log("Response Data: ${res.data}");
         AuthResponseModel authResponseModel = AuthResponseModel.fromJson(
           res.data,
         );
-        bool salesperson =
-            authResponseModel.message.salesPerson != null &&
-            authResponseModel.message.salesPerson.trim().isNotEmpty;
+        await storage.write(
+          key: "token",
+          value: authResponseModel.message.token,
+        );
+        bool isSalesPersonMissing = authResponseModel.message.salesPerson
+            .trim()
+            .isEmpty;
         emit(
           state.copyWith(
             isError: false,
+            isSuccess: authResponseModel.message.success,
             successMessage: authResponseModel.message.messageText,
-            isSalesPerson: !salesperson,
+            isSalesPerson: isSalesPersonMissing,
           ),
         );
         // emit(state.copyWith(isError: false, isLoading: true, isSuccess: true));
