@@ -1,0 +1,599 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'emp_in_out_bloc.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+// dart format off
+T _$identity<T>(T value) => value;
+/// @nodoc
+mixin _$EmpInOutEvent implements DiagnosticableTreeMixin {
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutEvent'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutEvent()';
+}
+
+
+}
+
+/// @nodoc
+class $EmpInOutEventCopyWith<$Res>  {
+$EmpInOutEventCopyWith(EmpInOutEvent _, $Res Function(EmpInOutEvent) __);
+}
+
+
+/// Adds pattern-matching-related methods to [EmpInOutEvent].
+extension EmpInOutEventPatterns on EmpInOutEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult Function( SelectVehicleEvent value)?  selectVehicle,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
+return employeeCheckinCheckout(_that);case SelectVehicleEvent() when selectVehicle != null:
+return selectVehicle(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckout value)  employeeCheckinCheckout,required TResult Function( SelectVehicleEvent value)  selectVehicle,}){
+final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout():
+return employeeCheckinCheckout(_that);case SelectVehicleEvent():
+return selectVehicle(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult? Function( SelectVehicleEvent value)?  selectVehicle,}){
+final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
+return employeeCheckinCheckout(_that);case SelectVehicleEvent() when selectVehicle != null:
+return selectVehicle(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult Function( String vehicle)?  selectVehicle,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
+return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent() when selectVehicle != null:
+return selectVehicle(_that.vehicle);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)  employeeCheckinCheckout,required TResult Function( String vehicle)  selectVehicle,}) {final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout():
+return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent():
+return selectVehicle(_that.vehicle);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult? Function( String vehicle)?  selectVehicle,}) {final _that = this;
+switch (_that) {
+case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
+return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent() when selectVehicle != null:
+return selectVehicle(_that.vehicle);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class EmployeeCheckinCheckout with DiagnosticableTreeMixin implements EmpInOutEvent {
+  const EmployeeCheckinCheckout({required this.empcheckinout});
+  
+
+ final  EmployeeCheckinCheckoutRequestModel empcheckinout;
+
+/// Create a copy of EmpInOutEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$EmployeeCheckinCheckoutCopyWith<EmployeeCheckinCheckout> get copyWith => _$EmployeeCheckinCheckoutCopyWithImpl<EmployeeCheckinCheckout>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutEvent.employeeCheckinCheckout'))
+    ..add(DiagnosticsProperty('empcheckinout', empcheckinout));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmployeeCheckinCheckout&&(identical(other.empcheckinout, empcheckinout) || other.empcheckinout == empcheckinout));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,empcheckinout);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutEvent.employeeCheckinCheckout(empcheckinout: $empcheckinout)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $EmployeeCheckinCheckoutCopyWith<$Res> implements $EmpInOutEventCopyWith<$Res> {
+  factory $EmployeeCheckinCheckoutCopyWith(EmployeeCheckinCheckout value, $Res Function(EmployeeCheckinCheckout) _then) = _$EmployeeCheckinCheckoutCopyWithImpl;
+@useResult
+$Res call({
+ EmployeeCheckinCheckoutRequestModel empcheckinout
+});
+
+
+
+
+}
+/// @nodoc
+class _$EmployeeCheckinCheckoutCopyWithImpl<$Res>
+    implements $EmployeeCheckinCheckoutCopyWith<$Res> {
+  _$EmployeeCheckinCheckoutCopyWithImpl(this._self, this._then);
+
+  final EmployeeCheckinCheckout _self;
+  final $Res Function(EmployeeCheckinCheckout) _then;
+
+/// Create a copy of EmpInOutEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? empcheckinout = null,}) {
+  return _then(EmployeeCheckinCheckout(
+empcheckinout: null == empcheckinout ? _self.empcheckinout : empcheckinout // ignore: cast_nullable_to_non_nullable
+as EmployeeCheckinCheckoutRequestModel,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SelectVehicleEvent with DiagnosticableTreeMixin implements EmpInOutEvent {
+  const SelectVehicleEvent({required this.vehicle});
+  
+
+ final  String vehicle;
+
+/// Create a copy of EmpInOutEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SelectVehicleEventCopyWith<SelectVehicleEvent> get copyWith => _$SelectVehicleEventCopyWithImpl<SelectVehicleEvent>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutEvent.selectVehicle'))
+    ..add(DiagnosticsProperty('vehicle', vehicle));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SelectVehicleEvent&&(identical(other.vehicle, vehicle) || other.vehicle == vehicle));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,vehicle);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutEvent.selectVehicle(vehicle: $vehicle)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SelectVehicleEventCopyWith<$Res> implements $EmpInOutEventCopyWith<$Res> {
+  factory $SelectVehicleEventCopyWith(SelectVehicleEvent value, $Res Function(SelectVehicleEvent) _then) = _$SelectVehicleEventCopyWithImpl;
+@useResult
+$Res call({
+ String vehicle
+});
+
+
+
+
+}
+/// @nodoc
+class _$SelectVehicleEventCopyWithImpl<$Res>
+    implements $SelectVehicleEventCopyWith<$Res> {
+  _$SelectVehicleEventCopyWithImpl(this._self, this._then);
+
+  final SelectVehicleEvent _self;
+  final $Res Function(SelectVehicleEvent) _then;
+
+/// Create a copy of EmpInOutEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? vehicle = null,}) {
+  return _then(SelectVehicleEvent(
+vehicle: null == vehicle ? _self.vehicle : vehicle // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+mixin _$EmpInOutState implements DiagnosticableTreeMixin {
+
+ bool get isLoading; bool get isError; String? get selectedVehicle; double? get lat; double? get lon;
+/// Create a copy of EmpInOutState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$EmpInOutStateCopyWith<EmpInOutState> get copyWith => _$EmpInOutStateCopyWithImpl<EmpInOutState>(this as EmpInOutState, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutState'))
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $EmpInOutStateCopyWith<$Res>  {
+  factory $EmpInOutStateCopyWith(EmpInOutState value, $Res Function(EmpInOutState) _then) = _$EmpInOutStateCopyWithImpl;
+@useResult
+$Res call({
+ bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon
+});
+
+
+
+
+}
+/// @nodoc
+class _$EmpInOutStateCopyWithImpl<$Res>
+    implements $EmpInOutStateCopyWith<$Res> {
+  _$EmpInOutStateCopyWithImpl(this._self, this._then);
+
+  final EmpInOutState _self;
+  final $Res Function(EmpInOutState) _then;
+
+/// Create a copy of EmpInOutState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,}) {
+  return _then(_self.copyWith(
+isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
+as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
+as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [EmpInOutState].
+extension EmpInOutStatePatterns on EmpInOutState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _EmpInOutState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _EmpInOutState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _EmpInOutState value)  $default,){
+final _that = this;
+switch (_that) {
+case _EmpInOutState():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _EmpInOutState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _EmpInOutState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _EmpInOutState() when $default != null:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)  $default,) {final _that = this;
+switch (_that) {
+case _EmpInOutState():
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)?  $default,) {final _that = this;
+switch (_that) {
+case _EmpInOutState() when $default != null:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _EmpInOutState with DiagnosticableTreeMixin implements EmpInOutState {
+   _EmpInOutState({required this.isLoading, required this.isError, required this.selectedVehicle, required this.lat, required this.lon});
+  
+
+@override final  bool isLoading;
+@override final  bool isError;
+@override final  String? selectedVehicle;
+@override final  double? lat;
+@override final  double? lon;
+
+/// Create a copy of EmpInOutState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$EmpInOutStateCopyWith<_EmpInOutState> get copyWith => __$EmpInOutStateCopyWithImpl<_EmpInOutState>(this, _$identity);
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutState'))
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon));
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$EmpInOutStateCopyWith<$Res> implements $EmpInOutStateCopyWith<$Res> {
+  factory _$EmpInOutStateCopyWith(_EmpInOutState value, $Res Function(_EmpInOutState) _then) = __$EmpInOutStateCopyWithImpl;
+@override @useResult
+$Res call({
+ bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon
+});
+
+
+
+
+}
+/// @nodoc
+class __$EmpInOutStateCopyWithImpl<$Res>
+    implements _$EmpInOutStateCopyWith<$Res> {
+  __$EmpInOutStateCopyWithImpl(this._self, this._then);
+
+  final _EmpInOutState _self;
+  final $Res Function(_EmpInOutState) _then;
+
+/// Create a copy of EmpInOutState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,}) {
+  return _then(_EmpInOutState(
+isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
+as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
+as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
+as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
+as double?,
+  ));
+}
+
+
+}
+
+// dart format on

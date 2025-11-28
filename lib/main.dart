@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/imagepicker/bloc/imagepicker_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/student/bloc/student_bloc.dart';
-import 'package:login_app_bloc_freezed/presentations/home_screen.dart';
 import 'package:login_app_bloc_freezed/presentations/login_screen.dart';
+import 'package:login_app_bloc_freezed/presentations/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,14 +13,14 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
+        BlocProvider<EmpInOutBloc>(create: (context) => EmpInOutBloc()),
+        BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: Splashscreen(),
       ),
     );
   }

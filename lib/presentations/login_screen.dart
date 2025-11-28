@@ -6,7 +6,8 @@ import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_elevator_btn.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_textformfield.dart';
 import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
-import 'package:login_app_bloc_freezed/presentations/home_screen.dart';
+import 'package:login_app_bloc_freezed/presentations/employee_checkin_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,10 +19,7 @@ class LoginScreen extends StatelessWidget {
 
     final TextEditingController passwordController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('Authentication Bloc')),
-        backgroundColor: Colors.grey.shade200,
-      ),
+      backgroundColor: Colors.blue[50],
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
@@ -29,80 +27,105 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CommonTextformfield(
-                hintText: 'User name',
-                controller: usernameController,
-                type: TextInputType.text,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your User name';
-                  }
-                  return null;
-                },
+              Lottie.asset(
+                'assets/animation/choose.json',
+                width: 250,
+                height: 250,
+                repeat: true,
               ),
-              SizedBox(height: 15),
-              CommonTextformfield(
-                hintText: 'Password',
-                controller: passwordController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 50),
-              BlocConsumer<AuthBloc, AuthState>(
-                listener: (context, state) {
-                  if (state.isSuccess) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
-                  }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        state.successMessage,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      backgroundColor: Colors.white,
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    CommonTextformfield(
+                      hintText: 'User name',
+                      controller: usernameController,
+                      type: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your User name';
+                        }
+                        return null;
+                      },
                     ),
-                  );
-                  if (state.isSalesPerson) {
-                    AlertDialog(
-                      title: Text("Warning"),
-                      content: Text("Sales Person is missing !"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text("Ok"),
-                        ),
-                      ],
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return CommonElevationBtn(
-                    btnText: 'Login',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        BlocProvider.of<AuthBloc>(context).add(
-                          (LogIn(
-                            authrequestmodel: AuthRequestModel(
-                              username: usernameController.text,
-                              password: passwordController.text,
+                    SizedBox(height: 15),
+                    CommonTextformfield(
+                      hintText: 'Password',
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    BlocConsumer<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state.isSuccess &&
+                            state.authresponsemodel != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EmployeeCheckinScreen(),
                             ),
-                          )),
+                          );
+                        } else if (state.authresponsemodel == null) {
+                          AlertDialog(
+                            title: Text("Warning"),
+                            content: Text("Sales Person is missing !"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Ok"),
+                              ),
+                            ],
+                          );
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              state.successMessage,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            backgroundColor: Colors.white,
+                          ),
                         );
-                        log(usernameController.text);
-                      }
-
-                      // usernameController.clear();
-                      // passwordController.clear();
-                    },
-                  );
-                },
+                      },
+                      builder: (context, state) {
+                        return SizedBox(
+                          width: 500,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromRGBO(20, 40, 56, 1),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                BlocProvider.of<AuthBloc>(context).add(
+                                  (LogIn(
+                                    authrequestmodel: AuthRequestModel(
+                                      username: usernameController.text,
+                                      password: passwordController.text,
+                                    ),
+                                  )),
+                                );
+                                log(usernameController.text);
+                              }
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

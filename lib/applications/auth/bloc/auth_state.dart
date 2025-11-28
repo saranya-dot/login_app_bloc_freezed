@@ -7,7 +7,9 @@ sealed class AuthState with _$AuthState {
     required bool isError,
     required bool isSuccess,
     required String successMessage,
-    required bool isSalesPerson,
+    required bool isLoggedin,
+    AuthResponseModel? authresponsemodel,
+    EmployeeStatusResponse? employeestatusresponse,
   }) = _AuthState;
   factory AuthState.initial() {
     return AuthState(
@@ -15,7 +17,7 @@ sealed class AuthState with _$AuthState {
       isLoading: true,
       isSuccess: false,
       successMessage: '',
-      isSalesPerson: false,
+      isLoggedin: false,
     );
   }
 }

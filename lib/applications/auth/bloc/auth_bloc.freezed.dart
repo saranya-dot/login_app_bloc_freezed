@@ -14,61 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthEvent {
 
- AuthRequestModel get authrequestmodel;
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AuthEventCopyWith<AuthEvent> get copyWith => _$AuthEventCopyWithImpl<AuthEvent>(this as AuthEvent, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent&&(identical(other.authrequestmodel, authrequestmodel) || other.authrequestmodel == authrequestmodel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthEvent);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,authrequestmodel);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AuthEvent(authrequestmodel: $authrequestmodel)';
+  return 'AuthEvent()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AuthEventCopyWith<$Res>  {
-  factory $AuthEventCopyWith(AuthEvent value, $Res Function(AuthEvent) _then) = _$AuthEventCopyWithImpl;
-@useResult
-$Res call({
- AuthRequestModel authrequestmodel
-});
-
-
-
-
-}
-/// @nodoc
-class _$AuthEventCopyWithImpl<$Res>
-    implements $AuthEventCopyWith<$Res> {
-  _$AuthEventCopyWithImpl(this._self, this._then);
-
-  final AuthEvent _self;
-  final $Res Function(AuthEvent) _then;
-
-/// Create a copy of AuthEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? authrequestmodel = null,}) {
-  return _then(_self.copyWith(
-authrequestmodel: null == authrequestmodel ? _self.authrequestmodel : authrequestmodel // ignore: cast_nullable_to_non_nullable
-as AuthRequestModel,
-  ));
-}
-
+class $AuthEventCopyWith<$Res>  {
+$AuthEventCopyWith(AuthEvent _, $Res Function(AuthEvent) __);
 }
 
 
@@ -86,11 +55,12 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  logIn,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LogIn value)?  logIn,TResult Function( SessionCheck value)?  sessionCheck,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LogIn() when logIn != null:
-return logIn(_that);case _:
+return logIn(_that);case SessionCheck() when sessionCheck != null:
+return sessionCheck(_that);case _:
   return orElse();
 
 }
@@ -108,11 +78,12 @@ return logIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  logIn,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LogIn value)  logIn,required TResult Function( SessionCheck value)  sessionCheck,}){
 final _that = this;
 switch (_that) {
 case LogIn():
-return logIn(_that);}
+return logIn(_that);case SessionCheck():
+return sessionCheck(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -126,11 +97,12 @@ return logIn(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  logIn,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LogIn value)?  logIn,TResult? Function( SessionCheck value)?  sessionCheck,}){
 final _that = this;
 switch (_that) {
 case LogIn() when logIn != null:
-return logIn(_that);case _:
+return logIn(_that);case SessionCheck() when sessionCheck != null:
+return sessionCheck(_that);case _:
   return null;
 
 }
@@ -147,10 +119,11 @@ return logIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( AuthRequestModel authrequestmodel)?  logIn,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( AuthRequestModel authrequestmodel)?  logIn,TResult Function()?  sessionCheck,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LogIn() when logIn != null:
-return logIn(_that.authrequestmodel);case _:
+return logIn(_that.authrequestmodel);case SessionCheck() when sessionCheck != null:
+return sessionCheck();case _:
   return orElse();
 
 }
@@ -168,10 +141,11 @@ return logIn(_that.authrequestmodel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( AuthRequestModel authrequestmodel)  logIn,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( AuthRequestModel authrequestmodel)  logIn,required TResult Function()  sessionCheck,}) {final _that = this;
 switch (_that) {
 case LogIn():
-return logIn(_that.authrequestmodel);}
+return logIn(_that.authrequestmodel);case SessionCheck():
+return sessionCheck();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -185,10 +159,11 @@ return logIn(_that.authrequestmodel);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( AuthRequestModel authrequestmodel)?  logIn,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( AuthRequestModel authrequestmodel)?  logIn,TResult? Function()?  sessionCheck,}) {final _that = this;
 switch (_that) {
 case LogIn() when logIn != null:
-return logIn(_that.authrequestmodel);case _:
+return logIn(_that.authrequestmodel);case SessionCheck() when sessionCheck != null:
+return sessionCheck();case _:
   return null;
 
 }
@@ -203,11 +178,11 @@ class LogIn implements AuthEvent {
   const LogIn({required this.authrequestmodel});
   
 
-@override final  AuthRequestModel authrequestmodel;
+ final  AuthRequestModel authrequestmodel;
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
+@JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $LogInCopyWith<LogIn> get copyWith => _$LogInCopyWithImpl<LogIn>(this, _$identity);
 
@@ -233,7 +208,7 @@ String toString() {
 /// @nodoc
 abstract mixin class $LogInCopyWith<$Res> implements $AuthEventCopyWith<$Res> {
   factory $LogInCopyWith(LogIn value, $Res Function(LogIn) _then) = _$LogInCopyWithImpl;
-@override @useResult
+@useResult
 $Res call({
  AuthRequestModel authrequestmodel
 });
@@ -252,7 +227,7 @@ class _$LogInCopyWithImpl<$Res>
 
 /// Create a copy of AuthEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? authrequestmodel = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? authrequestmodel = null,}) {
   return _then(LogIn(
 authrequestmodel: null == authrequestmodel ? _self.authrequestmodel : authrequestmodel // ignore: cast_nullable_to_non_nullable
 as AuthRequestModel,
@@ -263,9 +238,41 @@ as AuthRequestModel,
 }
 
 /// @nodoc
+
+
+class SessionCheck implements AuthEvent {
+   SessionCheck();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionCheck);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthEvent.sessionCheck()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$AuthState {
 
- bool get isLoading; bool get isError; bool get isSuccess; String get successMessage; bool get isSalesPerson;
+ bool get isLoading; bool get isError; bool get isSuccess; String get successMessage; bool get isLoggedin; AuthResponseModel? get authresponsemodel; EmployeeStatusResponse? get employeestatusresponse;
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -276,16 +283,16 @@ $AuthStateCopyWith<AuthState> get copyWith => _$AuthStateCopyWithImpl<AuthState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.isSalesPerson, isSalesPerson) || other.isSalesPerson == isSalesPerson));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.isLoggedin, isLoggedin) || other.isLoggedin == isLoggedin)&&(identical(other.authresponsemodel, authresponsemodel) || other.authresponsemodel == authresponsemodel)&&(identical(other.employeestatusresponse, employeestatusresponse) || other.employeestatusresponse == employeestatusresponse));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,isSuccess,successMessage,isSalesPerson);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isSuccess,successMessage,isLoggedin,authresponsemodel,employeestatusresponse);
 
 @override
 String toString() {
-  return 'AuthState(isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, successMessage: $successMessage, isSalesPerson: $isSalesPerson)';
+  return 'AuthState(isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, successMessage: $successMessage, isLoggedin: $isLoggedin, authresponsemodel: $authresponsemodel, employeestatusresponse: $employeestatusresponse)';
 }
 
 
@@ -296,7 +303,7 @@ abstract mixin class $AuthStateCopyWith<$Res>  {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) = _$AuthStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, bool isSuccess, String successMessage, bool isSalesPerson
+ bool isLoading, bool isError, bool isSuccess, String successMessage, bool isLoggedin, AuthResponseModel? authresponsemodel, EmployeeStatusResponse? employeestatusresponse
 });
 
 
@@ -313,14 +320,16 @@ class _$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? successMessage = null,Object? isSalesPerson = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? successMessage = null,Object? isLoggedin = null,Object? authresponsemodel = freezed,Object? employeestatusresponse = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
 as bool,successMessage: null == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
-as String,isSalesPerson: null == isSalesPerson ? _self.isSalesPerson : isSalesPerson // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,isLoggedin: null == isLoggedin ? _self.isLoggedin : isLoggedin // ignore: cast_nullable_to_non_nullable
+as bool,authresponsemodel: freezed == authresponsemodel ? _self.authresponsemodel : authresponsemodel // ignore: cast_nullable_to_non_nullable
+as AuthResponseModel?,employeestatusresponse: freezed == employeestatusresponse ? _self.employeestatusresponse : employeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,
   ));
 }
 
@@ -402,10 +411,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isSalesPerson)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isLoggedin,  AuthResponseModel? authresponsemodel,  EmployeeStatusResponse? employeestatusresponse)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isSalesPerson);case _:
+return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isLoggedin,_that.authresponsemodel,_that.employeestatusresponse);case _:
   return orElse();
 
 }
@@ -423,10 +432,10 @@ return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isSalesPerson)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isLoggedin,  AuthResponseModel? authresponsemodel,  EmployeeStatusResponse? employeestatusresponse)  $default,) {final _that = this;
 switch (_that) {
 case _AuthState():
-return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isSalesPerson);}
+return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isLoggedin,_that.authresponsemodel,_that.employeestatusresponse);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -440,10 +449,10 @@ return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isSalesPerson)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  bool isSuccess,  String successMessage,  bool isLoggedin,  AuthResponseModel? authresponsemodel,  EmployeeStatusResponse? employeestatusresponse)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isSalesPerson);case _:
+return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessage,_that.isLoggedin,_that.authresponsemodel,_that.employeestatusresponse);case _:
   return null;
 
 }
@@ -455,14 +464,16 @@ return $default(_that.isLoading,_that.isError,_that.isSuccess,_that.successMessa
 
 
 class _AuthState implements AuthState {
-   _AuthState({required this.isLoading, required this.isError, required this.isSuccess, required this.successMessage, required this.isSalesPerson});
+   _AuthState({required this.isLoading, required this.isError, required this.isSuccess, required this.successMessage, required this.isLoggedin, this.authresponsemodel, this.employeestatusresponse});
   
 
 @override final  bool isLoading;
 @override final  bool isError;
 @override final  bool isSuccess;
 @override final  String successMessage;
-@override final  bool isSalesPerson;
+@override final  bool isLoggedin;
+@override final  AuthResponseModel? authresponsemodel;
+@override final  EmployeeStatusResponse? employeestatusresponse;
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
@@ -474,16 +485,16 @@ _$AuthStateCopyWith<_AuthState> get copyWith => __$AuthStateCopyWithImpl<_AuthSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.isSalesPerson, isSalesPerson) || other.isSalesPerson == isSalesPerson));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage)&&(identical(other.isLoggedin, isLoggedin) || other.isLoggedin == isLoggedin)&&(identical(other.authresponsemodel, authresponsemodel) || other.authresponsemodel == authresponsemodel)&&(identical(other.employeestatusresponse, employeestatusresponse) || other.employeestatusresponse == employeestatusresponse));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,isSuccess,successMessage,isSalesPerson);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,isSuccess,successMessage,isLoggedin,authresponsemodel,employeestatusresponse);
 
 @override
 String toString() {
-  return 'AuthState(isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, successMessage: $successMessage, isSalesPerson: $isSalesPerson)';
+  return 'AuthState(isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, successMessage: $successMessage, isLoggedin: $isLoggedin, authresponsemodel: $authresponsemodel, employeestatusresponse: $employeestatusresponse)';
 }
 
 
@@ -494,7 +505,7 @@ abstract mixin class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Re
   factory _$AuthStateCopyWith(_AuthState value, $Res Function(_AuthState) _then) = __$AuthStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, bool isSuccess, String successMessage, bool isSalesPerson
+ bool isLoading, bool isError, bool isSuccess, String successMessage, bool isLoggedin, AuthResponseModel? authresponsemodel, EmployeeStatusResponse? employeestatusresponse
 });
 
 
@@ -511,14 +522,16 @@ class __$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? successMessage = null,Object? isSalesPerson = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? successMessage = null,Object? isLoggedin = null,Object? authresponsemodel = freezed,Object? employeestatusresponse = freezed,}) {
   return _then(_AuthState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
 as bool,successMessage: null == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
-as String,isSalesPerson: null == isSalesPerson ? _self.isSalesPerson : isSalesPerson // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,isLoggedin: null == isLoggedin ? _self.isLoggedin : isLoggedin // ignore: cast_nullable_to_non_nullable
+as bool,authresponsemodel: freezed == authresponsemodel ? _self.authresponsemodel : authresponsemodel // ignore: cast_nullable_to_non_nullable
+as AuthResponseModel?,employeestatusresponse: freezed == employeestatusresponse ? _self.employeestatusresponse : employeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,
   ));
 }
 

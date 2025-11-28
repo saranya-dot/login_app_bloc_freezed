@@ -5,10 +5,10 @@ import 'package:login_app_bloc_freezed/infrastructure/authservices/auth_baseurl.
 class AuthenticationApi {
   final Dio dio = Dio();
   AppUrls appUrls = AppUrls();
-  Future<Response> authpost(Map<String, dynamic> data) async {
+  Future<Response> authpost(String endpoint, Map<String, dynamic> data) async {
     try {
       Response response = await dio.post(
-        appUrls.baseUrl,
+        "${appUrls.baseUrl}$endpoint",
         data: FormData.fromMap(data),
       );
       log("API Endpoint: ${appUrls.baseUrl}");
