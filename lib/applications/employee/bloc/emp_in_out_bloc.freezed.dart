@@ -61,12 +61,13 @@ extension EmpInOutEventPatterns on EmpInOutEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult Function( SelectVehicleEvent value)?  selectVehicle,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult Function( SelectVehicleEvent value)?  selectVehicle,TResult Function( EmployeeStatusCheck value)?  employeeStatusCheck,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
 return employeeCheckinCheckout(_that);case SelectVehicleEvent() when selectVehicle != null:
-return selectVehicle(_that);case _:
+return selectVehicle(_that);case EmployeeStatusCheck() when employeeStatusCheck != null:
+return employeeStatusCheck(_that);case _:
   return orElse();
 
 }
@@ -84,12 +85,13 @@ return selectVehicle(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckout value)  employeeCheckinCheckout,required TResult Function( SelectVehicleEvent value)  selectVehicle,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckout value)  employeeCheckinCheckout,required TResult Function( SelectVehicleEvent value)  selectVehicle,required TResult Function( EmployeeStatusCheck value)  employeeStatusCheck,}){
 final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout():
 return employeeCheckinCheckout(_that);case SelectVehicleEvent():
-return selectVehicle(_that);}
+return selectVehicle(_that);case EmployeeStatusCheck():
+return employeeStatusCheck(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -103,12 +105,13 @@ return selectVehicle(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult? Function( SelectVehicleEvent value)?  selectVehicle,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckout value)?  employeeCheckinCheckout,TResult? Function( SelectVehicleEvent value)?  selectVehicle,TResult? Function( EmployeeStatusCheck value)?  employeeStatusCheck,}){
 final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
 return employeeCheckinCheckout(_that);case SelectVehicleEvent() when selectVehicle != null:
-return selectVehicle(_that);case _:
+return selectVehicle(_that);case EmployeeStatusCheck() when employeeStatusCheck != null:
+return employeeStatusCheck(_that);case _:
   return null;
 
 }
@@ -125,11 +128,12 @@ return selectVehicle(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult Function( String vehicle)?  selectVehicle,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult Function( String vehicle)?  selectVehicle,TResult Function()?  employeeStatusCheck,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
 return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent() when selectVehicle != null:
-return selectVehicle(_that.vehicle);case _:
+return selectVehicle(_that.vehicle);case EmployeeStatusCheck() when employeeStatusCheck != null:
+return employeeStatusCheck();case _:
   return orElse();
 
 }
@@ -147,11 +151,12 @@ return selectVehicle(_that.vehicle);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)  employeeCheckinCheckout,required TResult Function( String vehicle)  selectVehicle,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( EmployeeCheckinCheckoutRequestModel empcheckinout)  employeeCheckinCheckout,required TResult Function( String vehicle)  selectVehicle,required TResult Function()  employeeStatusCheck,}) {final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout():
 return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent():
-return selectVehicle(_that.vehicle);}
+return selectVehicle(_that.vehicle);case EmployeeStatusCheck():
+return employeeStatusCheck();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -165,11 +170,12 @@ return selectVehicle(_that.vehicle);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult? Function( String vehicle)?  selectVehicle,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( EmployeeCheckinCheckoutRequestModel empcheckinout)?  employeeCheckinCheckout,TResult? Function( String vehicle)?  selectVehicle,TResult? Function()?  employeeStatusCheck,}) {final _that = this;
 switch (_that) {
 case EmployeeCheckinCheckout() when employeeCheckinCheckout != null:
 return employeeCheckinCheckout(_that.empcheckinout);case SelectVehicleEvent() when selectVehicle != null:
-return selectVehicle(_that.vehicle);case _:
+return selectVehicle(_that.vehicle);case EmployeeStatusCheck() when employeeStatusCheck != null:
+return employeeStatusCheck();case _:
   return null;
 
 }
@@ -322,9 +328,47 @@ as String,
 }
 
 /// @nodoc
+
+
+class EmployeeStatusCheck with DiagnosticableTreeMixin implements EmpInOutEvent {
+  const EmployeeStatusCheck();
+  
+
+
+
+
+
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'EmpInOutEvent.employeeStatusCheck'))
+    ;
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmployeeStatusCheck);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'EmpInOutEvent.employeeStatusCheck()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
 mixin _$EmpInOutState implements DiagnosticableTreeMixin {
 
- bool get isLoading; bool get isError; String? get selectedVehicle; double? get lat; double? get lon;
+ bool get isLoading; bool get isError; String? get selectedVehicle; double? get lat; double? get lon; EmployeeStatusResponse? get emplyeestatusresponse;
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -336,21 +380,21 @@ $EmpInOutStateCopyWith<EmpInOutState> get copyWith => _$EmpInOutStateCopyWithImp
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'EmpInOutState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon,emplyeestatusresponse);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon)';
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon, emplyeestatusresponse: $emplyeestatusresponse)';
 }
 
 
@@ -361,7 +405,7 @@ abstract mixin class $EmpInOutStateCopyWith<$Res>  {
   factory $EmpInOutStateCopyWith(EmpInOutState value, $Res Function(EmpInOutState) _then) = _$EmpInOutStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon
+ bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon, EmployeeStatusResponse? emplyeestatusresponse
 });
 
 
@@ -378,14 +422,15 @@ class _$EmpInOutStateCopyWithImpl<$Res>
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,Object? emplyeestatusresponse = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
 as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
-as double?,
+as double?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,
   ));
 }
 
@@ -467,10 +512,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EmpInOutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);case _:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);case _:
   return orElse();
 
 }
@@ -488,10 +533,10 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)  $default,) {final _that = this;
 switch (_that) {
 case _EmpInOutState():
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);}
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -505,10 +550,10 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)?  $default,) {final _that = this;
 switch (_that) {
 case _EmpInOutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon);case _:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);case _:
   return null;
 
 }
@@ -520,7 +565,7 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 
 
 class _EmpInOutState with DiagnosticableTreeMixin implements EmpInOutState {
-   _EmpInOutState({required this.isLoading, required this.isError, required this.selectedVehicle, required this.lat, required this.lon});
+   _EmpInOutState({required this.isLoading, required this.isError, required this.selectedVehicle, required this.lat, required this.lon, required this.emplyeestatusresponse});
   
 
 @override final  bool isLoading;
@@ -528,6 +573,7 @@ class _EmpInOutState with DiagnosticableTreeMixin implements EmpInOutState {
 @override final  String? selectedVehicle;
 @override final  double? lat;
 @override final  double? lon;
+@override final  EmployeeStatusResponse? emplyeestatusresponse;
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
@@ -540,21 +586,21 @@ _$EmpInOutStateCopyWith<_EmpInOutState> get copyWith => __$EmpInOutStateCopyWith
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'EmpInOutState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon,emplyeestatusresponse);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon)';
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon, emplyeestatusresponse: $emplyeestatusresponse)';
 }
 
 
@@ -565,7 +611,7 @@ abstract mixin class _$EmpInOutStateCopyWith<$Res> implements $EmpInOutStateCopy
   factory _$EmpInOutStateCopyWith(_EmpInOutState value, $Res Function(_EmpInOutState) _then) = __$EmpInOutStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon
+ bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon, EmployeeStatusResponse? emplyeestatusresponse
 });
 
 
@@ -582,14 +628,15 @@ class __$EmpInOutStateCopyWithImpl<$Res>
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,Object? emplyeestatusresponse = freezed,}) {
   return _then(_EmpInOutState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
 as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
-as double?,
+as double?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,
   ));
 }
 

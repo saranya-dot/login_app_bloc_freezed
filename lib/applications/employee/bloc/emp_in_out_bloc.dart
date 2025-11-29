@@ -9,6 +9,7 @@ import 'package:login_app_bloc_freezed/infrastructure/authservices/emp_checkin_c
 import 'package:login_app_bloc_freezed/infrastructure/authservices/emp_checkin_checkout_status.dart';
 import 'package:login_app_bloc_freezed/infrastructure/get%20current%20location/get_location.dart';
 import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
+import 'package:login_app_bloc_freezed/models/empcheckresponse.dart';
 
 part 'emp_in_out_event.dart';
 part 'emp_in_out_state.dart';
@@ -21,32 +22,21 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
       Position position = await getlocation();
       double lat = position.latitude;
       double lon = position.longitude;
-      emit(state.copyWith(lon: lon, lat: lat));
+
       try {
-        Map<String, dynamic> formData = {
-          "log_type": 'IN',
-          "time": event.empcheckinout.time,
-          "image": event.empcheckinout.image,
-          "file_type": event.empcheckinout.fileType,
-          "odometer_value": "12,32,32,132",
-          "latitude": "19.0760",
-          "longitude": "72.8777",
-          "vehicle_type": event.empcheckinout.vehicletype,
-        };
         log("time : ${event.empcheckinout.time.toString()}");
         log('latitude : $lat');
         log('longitude: $lon');
-        log(formData.toString());
+
         Response res = await EmpCheckinCheckoutApi().emppost(
           "employee.employee_checkin",
-          formData,
+          event.empcheckinout.toJson(),
         );
         log("Response Data: ${res.data}");
-        Response status = await EmpCheckinCheckoutStatus().empGet(
-          "employee.get_checkin_status",
+        add(EmployeeStatusCheck());
+        emit(
+          state.copyWith(isError: false, isLoading: false, lat: lat, lon: lon),
         );
-        log("employee status api call response : ${status.data}");
-        emit(state.copyWith(isError: false, isLoading: false));
       } catch (e) {
         log("$e error occured");
       }
@@ -67,6 +57,26 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
         emit(
           state.copyWith(isError: false, isLoading: false, selectedVehicle: ''),
         );
+      }
+    });
+    on<EmployeeStatusCheck>((event, emit) async {
+      try {
+        emit(state.copyWith(isError: false, isLoading: true));
+        Response status = await EmpCheckinCheckoutStatus().empGet(
+          "employee.get_checkin_status",
+        );
+        log("employee status api call response : ${status.data}");
+        try {
+          EmployeeStatusResponse employeeStatusResponse =
+              EmployeeStatusResponse.fromJson(status.data);
+          emit(state.copyWith(emplyeestatusresponse: employeeStatusResponse));
+        } catch (e) {
+          print('error happen in employeeStatusResponse $e ');
+          emit(state.copyWith(emplyeestatusresponse: null, isError: true));
+        }
+      } catch (e) {
+        print('Employee status check api error $e');
+        emit(state.copyWith(isError: true));
       }
     });
   }

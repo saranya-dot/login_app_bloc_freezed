@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 part 'imagepicker_event.dart';
@@ -11,7 +12,7 @@ part 'imagepicker_bloc.freezed.dart';
 class ImagepickerBloc extends Bloc<ImagepickerEvent, ImagepickerState> {
   final ImagePicker picker = ImagePicker();
   ImagepickerBloc() : super(ImagepickerState.initial()) {
-    on<Pickimageevent>((event, emit) async {
+    on<PickImageEvent>((event, emit) async {
       emit(
         state.copyWith(isUploading: false, isImagepick: false, isLoading: true),
       );
@@ -27,10 +28,20 @@ class ImagepickerBloc extends Bloc<ImagepickerEvent, ImagepickerState> {
 
         if (picked != null) {
           File imageFile = File(picked.path);
+          final compressedBytes = await FlutterImageCompress.compressWithFile(
+            imageFile.path,
+            quality: 40,
+            minWidth: 800,
+            minHeight: 800,
+          );
+          if (compressedBytes == null) {
+            emit(state.copyWith(isError: true));
+            return;
+          }
 
           final bytes = await imageFile.readAsBytes();
 
-          selectedImageBytes = base64Encode(bytes);
+          selectedImageBytes = base64Encode(compressedBytes);
           emit(
             state.copyWith(
               imagePath: selectedImageBytes,
@@ -44,6 +55,11 @@ class ImagepickerBloc extends Bloc<ImagepickerEvent, ImagepickerState> {
         log("Error picking image: $e");
         emit(state.copyWith(isError: true));
       }
+    });
+    on<DeletePickImageEvent>((event, emit) async {
+      emit(
+        state.copyWith(imagePath: null, isImagepick: false, isLoading: false),
+      );
     });
   }
 }

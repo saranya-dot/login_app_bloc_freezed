@@ -28,30 +28,52 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         Response res = await AuthenticationApi().authpost(
           "auth.authenticate",
           event.authrequestmodel.toMap(),
-        );
-        log("Response Data: ${res.data}");
-        AuthResponseModel authResponseModel = AuthResponseModel.fromJson(
-          res.data,
-        );
-        await storage.write(
-          key: "token",
-          value: authResponseModel.message.token,
-        );
-        Response status = await EmpCheckinCheckoutStatus().empGet(
-          "employee.get_checkin_status",
-        );
-        log("employee status api call response : ${status.data}");
-        EmployeeStatusResponse employeeStatusResponse =
-            EmployeeStatusResponse.fromJson(status.data);
-        emit(
-          state.copyWith(
-            isError: false,
-            isSuccess: authResponseModel.message.success,
-            successMessage: authResponseModel.message.messageText,
-            authresponsemodel: authResponseModel,
-            employeestatusresponse: employeeStatusResponse,
-          ),
-        );
+        ); // auth api called
+        log("Response Data: ${res.data}"); // auth api response
+
+        try {
+          AuthResponseModel authResponseModel = AuthResponseModel.fromJson(
+            res.data,
+          ); // saved that auth api response to a model called authresponsemodel
+
+          //if the authresponsemodel contain token
+          await storage.write(
+            key: "token",
+            value: authResponseModel.message.token,
+          );
+          log("token saved ");
+          log("isloggedin value = true");
+          emit(
+            state.copyWith(
+              isError: false,
+              isLoggedin: true,
+              isSuccess: authResponseModel.message.success,
+              successMessage: authResponseModel.message.messageText,
+              authresponsemodel: authResponseModel,
+              // employeestatusresponse: employeeStatusResponse,
+            ),
+          );
+        } catch (e) {
+          log("check");
+          emit(
+            state.copyWith(
+              isError: true,
+              isLoggedin: false,
+              isSuccess: false,
+              successMessage: "something went wrong ",
+              authresponsemodel: null,
+              // employeestatusresponse: employeeStatusResponse,
+            ),
+          );
+        }
+
+        // Response status = await EmpCheckinCheckoutStatus().empGet(
+        //   "employee.get_checkin_status",
+        // );
+        // log("employee status api call response : ${status.data}");
+        // EmployeeStatusResponse employeeStatusResponse =
+        //     EmployeeStatusResponse.fromJson(status.data);
+
         // emit(state.copyWith(isError: false, isLoading: true, isSuccess: true));
 
         // await Future.delayed(Duration(seconds: 3), () {
@@ -74,13 +96,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         //         );
         // });
       } catch (e) {
-        print('request error!');
-        emit(state.copyWith(isError: true, isLoading: false, isSuccess: false));
+        print('request error in auth ! $e');
+        emit(
+          state.copyWith(
+            isError: true,
+            isLoading: false,
+            isSuccess: false,
+            isLoggedin: false,
+          ),
+        );
         log('$e');
       }
     });
     on<SessionCheck>((event, emit) async {
-      emit(state.copyWith(isError: false, isLoading: true));
+      emit(state.copyWith(isError: false, isLoading: true, isLoggedin: false));
 
       try {
         // session check
@@ -92,8 +121,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         if (token == null) {
           emit(state.copyWith(isLoggedin: false, isLoading: false));
+
+          log("session check the isloggedin value : false");
         } else {
           emit(state.copyWith(isLoggedin: true, isLoading: false));
+          log("session check the isloggedin value : true");
         }
       } catch (e) {
         log("$e error occured");

@@ -8,14 +8,16 @@ sealed class EmpInOutState with _$EmpInOutState {
     required String? selectedVehicle,
     required double? lat,
     required double? lon,
+    required EmployeeStatusResponse? emplyeestatusresponse,
   }) = _EmpInOutState;
   factory EmpInOutState.initial() {
     return EmpInOutState(
-      isLoading: true,
+      isLoading: false,
       isError: false,
       selectedVehicle: null,
       lat: 0,
       lon: 0,
+      emplyeestatusresponse: null,
     );
   }
 }

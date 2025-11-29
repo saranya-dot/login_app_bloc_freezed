@@ -20,4 +20,36 @@ class EmployeeCheckinCheckoutRequestModel {
     this.longitude,
     required this.vehicletype,
   });
+
+  factory EmployeeCheckinCheckoutRequestModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return EmployeeCheckinCheckoutRequestModel(
+      logType: json['logType'] ?? '',
+      time: json['time'] ?? '',
+      image: json['image'] ?? '',
+      imageOdo: json['imageOdo'] ?? '',
+      fileType: json['fileType'] ?? '',
+      odometerValue: json['odometerValue'] ?? '',
+      latitude: (json['latitude'] != null) ? json['latitude'].toDouble() : null,
+      longitude: (json['longitude'] != null)
+          ? json['longitude'].toDouble()
+          : null,
+      vehicletype: json['vehicletype'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'logType': logType,
+      'time': time,
+      'image': image,
+      'imageOdo': imageOdo,
+      'fileType': fileType,
+      'odometerValue': odometerValue,
+      'latitude': latitude,
+      'longitude': longitude,
+      'vehicletype': vehicletype,
+    };
+  }
 }

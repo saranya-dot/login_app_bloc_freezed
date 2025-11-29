@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
         BlocProvider<EmpInOutBloc>(create: (context) => EmpInOutBloc()),
-        BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()),
+        BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()), 
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

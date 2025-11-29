@@ -7,5 +7,5 @@ sealed class EmpInOutEvent with _$EmpInOutEvent {
   }) = EmployeeCheckinCheckout;
   const factory EmpInOutEvent.selectVehicle({required String vehicle}) =
       SelectVehicleEvent;
-  
+  const factory EmpInOutEvent.employeeStatusCheck() = EmployeeStatusCheck;
 }

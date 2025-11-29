@@ -25,10 +25,10 @@ class MessageData {
 }
 
 class StatusMessage {
-  final String checkInTime;
-  final String checkOutTime;
-  final String currentStatus;
-  final String vehicleType;
+  final String? checkInTime;
+  final String? checkOutTime;
+  final String? currentStatus;
+  final String? vehicleType;
 
   StatusMessage({
     required this.checkInTime,

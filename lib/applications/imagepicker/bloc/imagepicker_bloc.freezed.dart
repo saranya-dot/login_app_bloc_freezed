@@ -55,11 +55,12 @@ extension ImagepickerEventPatterns on ImagepickerEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( Pickimageevent value)?  pickimageevent,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( PickImageEvent value)?  pickimageevent,TResult Function( DeletePickImageEvent value)?  deletepickimageevent,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case Pickimageevent() when pickimageevent != null:
-return pickimageevent(_that);case _:
+case PickImageEvent() when pickimageevent != null:
+return pickimageevent(_that);case DeletePickImageEvent() when deletepickimageevent != null:
+return deletepickimageevent(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return pickimageevent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( Pickimageevent value)  pickimageevent,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( PickImageEvent value)  pickimageevent,required TResult Function( DeletePickImageEvent value)  deletepickimageevent,}){
 final _that = this;
 switch (_that) {
-case Pickimageevent():
-return pickimageevent(_that);}
+case PickImageEvent():
+return pickimageevent(_that);case DeletePickImageEvent():
+return deletepickimageevent(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -95,11 +97,12 @@ return pickimageevent(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( Pickimageevent value)?  pickimageevent,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( PickImageEvent value)?  pickimageevent,TResult? Function( DeletePickImageEvent value)?  deletepickimageevent,}){
 final _that = this;
 switch (_that) {
-case Pickimageevent() when pickimageevent != null:
-return pickimageevent(_that);case _:
+case PickImageEvent() when pickimageevent != null:
+return pickimageevent(_that);case DeletePickImageEvent() when deletepickimageevent != null:
+return deletepickimageevent(_that);case _:
   return null;
 
 }
@@ -116,10 +119,11 @@ return pickimageevent(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  pickimageevent,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  pickimageevent,TResult Function()?  deletepickimageevent,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case Pickimageevent() when pickimageevent != null:
-return pickimageevent();case _:
+case PickImageEvent() when pickimageevent != null:
+return pickimageevent();case DeletePickImageEvent() when deletepickimageevent != null:
+return deletepickimageevent();case _:
   return orElse();
 
 }
@@ -137,10 +141,11 @@ return pickimageevent();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  pickimageevent,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  pickimageevent,required TResult Function()  deletepickimageevent,}) {final _that = this;
 switch (_that) {
-case Pickimageevent():
-return pickimageevent();}
+case PickImageEvent():
+return pickimageevent();case DeletePickImageEvent():
+return deletepickimageevent();}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -154,10 +159,11 @@ return pickimageevent();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  pickimageevent,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  pickimageevent,TResult? Function()?  deletepickimageevent,}) {final _that = this;
 switch (_that) {
-case Pickimageevent() when pickimageevent != null:
-return pickimageevent();case _:
+case PickImageEvent() when pickimageevent != null:
+return pickimageevent();case DeletePickImageEvent() when deletepickimageevent != null:
+return deletepickimageevent();case _:
   return null;
 
 }
@@ -168,8 +174,8 @@ return pickimageevent();case _:
 /// @nodoc
 
 
-class Pickimageevent implements ImagepickerEvent {
-  const Pickimageevent();
+class PickImageEvent implements ImagepickerEvent {
+  const PickImageEvent();
   
 
 
@@ -179,7 +185,7 @@ class Pickimageevent implements ImagepickerEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Pickimageevent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickImageEvent);
 }
 
 
@@ -189,6 +195,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'ImagepickerEvent.pickimageevent()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class DeletePickImageEvent implements ImagepickerEvent {
+  const DeletePickImageEvent();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeletePickImageEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'ImagepickerEvent.deletepickimageevent()';
 }
 
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_elevator_btn.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_textformfield.dart';
 import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
@@ -15,6 +16,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthBloc>().add(
+        SessionCheck(),
+      ); // token and get location event
+      context.read<EmpInOutBloc>().add(
+        EmployeeStatusCheck(),
+      ); // emp checked in or out status check event
+    });
     final TextEditingController usernameController = TextEditingController();
 
     final TextEditingController passwordController = TextEditingController();
@@ -64,13 +73,17 @@ class LoginScreen extends StatelessWidget {
                       listener: (context, state) {
                         if (state.isSuccess &&
                             state.authresponsemodel != null) {
+                          context.read<EmpInOutBloc>().add(
+                            EmployeeStatusCheck(),
+                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => EmployeeCheckinScreen(),
                             ),
                           );
-                        } else if (state.authresponsemodel == null) {
+                        }
+                        if (state.authresponsemodel == null) {
                           AlertDialog(
                             title: Text("Warning"),
                             content: Text("Sales Person is missing !"),
@@ -113,6 +126,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   )),
                                 );
+
                                 log(usernameController.text);
                               }
                             },

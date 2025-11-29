@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
@@ -12,7 +12,7 @@ import 'package:login_app_bloc_freezed/presentations/profile_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class EmployeeCheckinScreen extends StatefulWidget {
-  const EmployeeCheckinScreen({super.key});
+  EmployeeCheckinScreen({super.key});
 
   @override
   State<EmployeeCheckinScreen> createState() => _EmployeeCheckinScreenState();
@@ -23,6 +23,9 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<EmpInOutBloc>().add(EmployeeStatusCheck());
+    });
     String? selectedVehicle;
     return Scaffold(
       body: Stack(
@@ -126,13 +129,23 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          BlocConsumer<AuthBloc, AuthState>(
+                          BlocConsumer<EmpInOutBloc, EmpInOutState>(
                             listener: (context, state) {},
                             builder: (context, state) {
+                              final data =
+                                  state.emplyeestatusresponse?.message.message;
+                              if (data == null) {
+                                return const Center(
+                                  child: Text(
+                                    "Fetching employee status...",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                );
+                              }
                               return Column(
                                 children: [
                                   Text(
-                                    "Checked ${state.employeestatusresponse!.message.message.currentStatus}",
+                                    "Checked ${data.currentStatus}",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 18,
@@ -142,279 +155,302 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                   ),
                                   SizedBox(height: 10),
                                   Text(
-                                    state
-                                                .employeestatusresponse!
-                                                .message
-                                                .message
-                                                .currentStatus ==
-                                            "OUT"
-                                        ? "Checked out time: ${state.employeestatusresponse!.message.message.checkOutTime}"
-                                        : "Checked in time: ${state.employeestatusresponse!.message.message.checkInTime}",
+                                    data.currentStatus == "OUT"
+                                        ? "Checked out time: ${data.checkOutTime}"
+                                        : "Checked in time: ${data.checkInTime}",
                                   ),
                                   SizedBox(height: 10),
-                                  state
-                                              .employeestatusresponse!
-                                              .message
-                                              .message
-                                              .currentStatus ==
-                                          "OUT"
-                                      ? SizedBox.shrink()
-                                      : ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                Colors.blue.shade100,
-                                          ),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  backgroundColor: Colors.white,
-                                                  title: Center(
-                                                    child: const Text(
-                                                      "Check in details",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  content: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          BlocConsumer<
-                                                            ImagepickerBloc,
-                                                            ImagepickerState
-                                                          >(
-                                                            listener:
-                                                                (
-                                                                  context,
-                                                                  state,
-                                                                ) {},
-                                                            builder: (context, state) {
-                                                              Uint8List?
-                                                              imageBytes;
-                                                              if (state
-                                                                      .imagePath !=
-                                                                  null) {
-                                                                imageBytes =
-                                                                    base64Decode(
-                                                                      state
-                                                                          .imagePath!,
-                                                                    );
-                                                              }
-                                                              return GestureDetector(
+
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue.shade100,
+                                    ),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            title: Center(
+                                              child: const Text(
+                                                "Details",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                            content: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    BlocConsumer<
+                                                      ImagepickerBloc,
+                                                      ImagepickerState
+                                                    >(
+                                                      listener:
+                                                          (context, state) {},
+                                                      builder: (context, state) {
+                                                        Uint8List? imageBytes;
+                                                        if (state.imagePath !=
+                                                                null &&
+                                                            state
+                                                                .imagePath!
+                                                                .isNotEmpty) {
+                                                          try {
+                                                            imageBytes =
+                                                                base64Decode(
+                                                                  state
+                                                                      .imagePath!,
+                                                                );
+                                                          } catch (e) {
+                                                            log(
+                                                              "Invalid base64 image: $e",
+                                                            );
+                                                          }
+                                                        }
+                                                        return imageBytes ==
+                                                                null
+                                                            ? GestureDetector(
                                                                 onTap: () {
                                                                   BlocProvider.of<
                                                                         ImagepickerBloc
                                                                       >(context)
                                                                       .add(
-                                                                        (Pickimageevent()),
+                                                                        (PickImageEvent()),
                                                                       );
                                                                 },
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      width: 60,
-                                                                      height:
-                                                                          60,
-                                                                      decoration: BoxDecoration(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(
-                                                                              2,
-                                                                            ),
-                                                                        color: Colors
-                                                                            .blue[100],
-                                                                      ),
-                                                                      child: Image.memory(
-                                                                        imageBytes!,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ),
+                                                                child: Icon(
+                                                                  Icons.camera,
+                                                                ),
+                                                              )
+                                                            : Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    width: 60,
+                                                                    height: 60,
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                            10,
+                                                                          ),
+                                                                      color: Colors
+                                                                          .blue[100],
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                          SizedBox(width: 10),
-                                                          BlocBuilder<
-                                                            EmpInOutBloc,
-                                                            EmpInOutState
-                                                          >(
-                                                            builder: (context, state) {
-                                                              return DropdownButton<
-                                                                String
-                                                              >(
-                                                                hint: const Text(
-                                                                  "Select Vehicle Type",
-                                                                  style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        15,
+                                                                    child: Image.memory(
+                                                                      imageBytes,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
-                                                                ),
+                                                                  Positioned(
+                                                                    // top: -5,
+                                                                    right: -15,
+                                                                    bottom: -15,
 
-                                                                value: state
-                                                                    .selectedVehicle,
-                                                                borderRadius:
-                                                                    BorderRadius.all(
-                                                                      Radius.circular(
-                                                                        25,
+                                                                    child: IconButton(
+                                                                      onPressed: () {
+                                                                        context
+                                                                            .read<
+                                                                              ImagepickerBloc
+                                                                            >()
+                                                                            .add(
+                                                                              DeletePickImageEvent(),
+                                                                            );
+                                                                      },
+                                                                      icon: Icon(
+                                                                        Icons
+                                                                            .delete,
+                                                                        color: Colors
+                                                                            .deepOrange,
                                                                       ),
-                                                                    ),
-                                                                items: const [
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        "Car",
-                                                                    child: Text(
-                                                                      "Car",
-                                                                    ),
-                                                                  ),
-                                                                  DropdownMenuItem(
-                                                                    value:
-                                                                        "Bike",
-                                                                    child: Text(
-                                                                      "Bike",
                                                                     ),
                                                                   ),
                                                                 ],
-                                                                onChanged: (value) {
-                                                                  if (value !=
-                                                                      null) {
-                                                                    BlocProvider.of<
-                                                                          EmpInOutBloc
-                                                                        >(context)
-                                                                        .add(
-                                                                          (SelectVehicleEvent(
-                                                                            vehicle:
-                                                                                value,
-                                                                          )),
-                                                                        );
-                                                                  }
-                                                                },
                                                               );
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-
-                                                      SizedBox(height: 10),
-
-                                                      SizedBox(height: 10),
-                                                      TextField(
-                                                        controller:
-                                                            odoController,
-                                                        keyboardType:
-                                                            TextInputType
-                                                                .number,
-                                                        decoration: InputDecoration(
-                                                          labelText:
-                                                              "Enter Odometer (km)",
-                                                          labelStyle: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  actions: [
-                                                    BlocConsumer<
+                                                      },
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    BlocBuilder<
                                                       EmpInOutBloc,
                                                       EmpInOutState
                                                     >(
-                                                      listener:
-                                                          (context, state) {},
-                                                      builder: (context, empstate) {
-                                                        return BlocConsumer<
-                                                          ImagepickerBloc,
-                                                          ImagepickerState
+                                                      builder: (context, state) {
+                                                        return DropdownButton<
+                                                          String
                                                         >(
-                                                          listener:
-                                                              (
-                                                                context,
-                                                                state,
-                                                              ) {},
-                                                          builder: (context, state) {
-                                                            return ElevatedButton(
-                                                              onPressed: () {
-                                                                BlocProvider.of<EmpInOutBloc>(
-                                                                  context,
-                                                                ).add(
-                                                                  (EmployeeCheckinCheckout(
-                                                                    empcheckinout: EmployeeCheckinCheckoutRequestModel(
-                                                                      fileType:
-                                                                          state
-                                                                              .fileType!,
-                                                                      image: state
-                                                                          .imagePath!,
-                                                                      imageOdo:
-                                                                          '',
-                                                                      logType:
-                                                                          'IN',
-                                                                      latitude:
-                                                                          empstate
-                                                                              .lat,
-                                                                      longitude:
-                                                                          empstate
-                                                                              .lon,
-                                                                      odometerValue:
-                                                                          odoController
-                                                                              .text,
-                                                                      time:
-                                                                          DateFormat(
-                                                                            "yyyy-MM-dd HH:mm:ss",
-                                                                          ).format(
-                                                                            DateTime.now(),
-                                                                          ),
-                                                                      vehicletype:
-                                                                          empstate
-                                                                              .selectedVehicle!,
-                                                                    ),
-                                                                  )),
-                                                                );
-                                                              },
-                                                              child: Text(
-                                                                'Check in',
+                                                          hint: const Text(
+                                                            "Select Vehicle Type",
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+
+                                                          value:
+                                                              selectedVehicle,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                Radius.circular(
+                                                                  25,
+                                                                ),
                                                               ),
-                                                            );
+                                                          items: const [
+                                                            DropdownMenuItem(
+                                                              value: "Car",
+                                                              child: Text(
+                                                                "Car",
+                                                              ),
+                                                            ),
+                                                            DropdownMenuItem(
+                                                              value: "Bike",
+                                                              child: Text(
+                                                                "Bike",
+                                                              ),
+                                                            ),
+                                                          ],
+                                                          onChanged: (value) {
+                                                            // if (value != null) {
+                                                            //   BlocProvider.of<
+                                                            //         EmpInOutBloc
+                                                            //       >(context)
+                                                            //       .add(
+                                                            //         (SelectVehicleEvent(
+                                                            //           vehicle:
+                                                            //               value,
+                                                            //         )),
+                                                            //       );
+                                                            // }
+                                                            setState(() {
+                                                              selectedVehicle =
+                                                                  value;
+                                                            });
                                                           },
                                                         );
                                                       },
                                                     ),
                                                   ],
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.qr_code_scanner,
-                                                color: Colors.blueAccent,
-                                                size: 20,
+                                                ),
+
+                                                SizedBox(height: 10),
+
+                                                SizedBox(height: 10),
+                                                TextField(
+                                                  controller: odoController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  decoration: InputDecoration(
+                                                    labelText:
+                                                        "Enter Odometer (km)",
+                                                    labelStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            actions: [
+                                              BlocConsumer<
+                                                EmpInOutBloc,
+                                                EmpInOutState
+                                              >(
+                                                listener: (context, state) {},
+                                                builder: (context, empstate) {
+                                                  return BlocConsumer<
+                                                    ImagepickerBloc,
+                                                    ImagepickerState
+                                                  >(
+                                                    listener:
+                                                        (context, state) {},
+                                                    builder: (context, state) {
+                                                      return ElevatedButton(
+                                                        onPressed: () {
+                                                          BlocProvider.of<EmpInOutBloc>(
+                                                            context,
+                                                          ).add(
+                                                            (EmployeeCheckinCheckout(
+                                                              empcheckinout: EmployeeCheckinCheckoutRequestModel(
+                                                                fileType: state
+                                                                    .fileType!,
+                                                                image: state
+                                                                    .imagePath!,
+                                                                imageOdo: '',
+                                                                logType: empstate
+                                                                    .emplyeestatusresponse!
+                                                                    .message
+                                                                    .message
+                                                                    .currentStatus!,
+                                                                latitude:
+                                                                    empstate
+                                                                        .lat,
+                                                                longitude:
+                                                                    empstate
+                                                                        .lon,
+                                                                odometerValue:
+                                                                    odoController
+                                                                        .text,
+                                                                time:
+                                                                    DateFormat(
+                                                                      "yyyy-MM-dd HH:mm:ss",
+                                                                    ).format(
+                                                                      DateTime.now(),
+                                                                    ),
+                                                                vehicletype:
+                                                                    selectedVehicle!,
+                                                              ),
+                                                            )),
+                                                          );
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                        child: Text('Check in'),
+                                                      );
+                                                    },
+                                                  );
+                                                },
                                               ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Check out',
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.qr_code_scanner,
+                                          color: Colors.blueAccent,
+                                          size: 20,
+                                        ),
+                                        SizedBox(width: 8),
+                                        state
+                                                    .emplyeestatusresponse!
+                                                    .message
+                                                    .message
+                                                    .currentStatus ==
+                                                "OUT"
+                                            ? Text(
+                                                'Check In',
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                ),
+                                              )
+                                            : Text(
+                                                'Check Out',
                                                 style: TextStyle(
                                                   color: Colors.blue,
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               );
                             },
