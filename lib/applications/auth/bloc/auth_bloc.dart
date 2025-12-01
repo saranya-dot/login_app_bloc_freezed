@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
+import 'package:login_app_bloc_freezed/infrastructure/employeedb/employeedb.dart';
 import 'package:login_app_bloc_freezed/infrastructure/get%20current%20location/get_location.dart';
 import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
 import 'package:login_app_bloc_freezed/models/authresponsemodel.dart';
@@ -21,6 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           final authResponse = await ApiService().loginUser(
             event.authrequestmodel,
           );
+          final employeedb = Employeedb();
+          await employeedb.insertEmployeeData(authResponse);
 
           emit(
             state.copyWith(

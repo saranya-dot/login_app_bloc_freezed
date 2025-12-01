@@ -1,70 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        final user = state.authresponsemodel?.message;
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, profilestate) {
+        return BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            final user = state.authresponsemodel?.message;
 
-        return Scaffold(
-          appBar: AppBar(title: const Text('Profile Screen')),
-
-          body: Container(
-            width: double.infinity,
-            height: double.infinity,
-
-            // background image
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage('assets/images/nonn.png'),
-                fit: BoxFit.cover,
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text(
+                  'Profile Screen',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                leading: Icon(
+                  Icons.arrow_back_ios,
+                  size: 15,
+                  color: Colors.white,
+                ),
+                backgroundColor: Color.fromRGBO(20, 40, 56, 1),
               ),
-            ),
 
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Container(
+              body: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                height: double.infinity,
+
+                // background image
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 5,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  image: DecorationImage(
+                    image: const AssetImage('assets/images/nonn.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
 
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Profile Details",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.85),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          blurRadius: 5,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
 
-                    InfoRow(
-                      title: "Sales Person",
-                      value: user?.salesPerson ?? "N/A",
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Profile Details",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        InfoRow(
+                          title: "Sales Person",
+                          value: profilestate.empprofilemodel!.salesPerson,
+                        ),
+                        InfoRow(
+                          title: "Date of birth",
+                          value: profilestate.empprofilemodel!.dateOfBirth,
+                        ),
+                        InfoRow(
+                          title: "Department",
+                          value: profilestate.empprofilemodel!.department,
+                        ),
+                        InfoRow(
+                          title: "Designation",
+                          value: profilestate.empprofilemodel!.designation,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );

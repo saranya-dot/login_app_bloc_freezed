@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/imagepicker/bloc/imagepicker_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/student/bloc/student_bloc.dart';
 import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
 import 'package:login_app_bloc_freezed/presentations/splashscreen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
         BlocProvider<EmpInOutBloc>(create: (context) => EmpInOutBloc()),
         BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()),
+        BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

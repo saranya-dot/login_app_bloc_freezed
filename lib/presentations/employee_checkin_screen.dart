@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/imagepicker/bloc/imagepicker_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
 import 'package:login_app_bloc_freezed/presentations/profile_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -25,6 +26,7 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<EmpInOutBloc>().add(EmployeeStatusCheck());
+      context.read<ProfileBloc>().add(GetEmpProfile());
     });
     String? selectedVehicle;
     final _formKey = GlobalKey<FormState>();
