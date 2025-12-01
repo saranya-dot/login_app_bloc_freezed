@@ -1,5 +1,5 @@
 class EmployeeCheckinCheckoutRequestModel {
-  String logType;
+  String logtype;
   String time;
   String image;
   String imageOdo;
@@ -10,7 +10,7 @@ class EmployeeCheckinCheckoutRequestModel {
   String vehicletype;
 
   EmployeeCheckinCheckoutRequestModel({
-    required this.logType,
+    required this.logtype,
     required this.time,
     required this.image,
     required this.imageOdo,
@@ -25,7 +25,7 @@ class EmployeeCheckinCheckoutRequestModel {
     Map<String, dynamic> json,
   ) {
     return EmployeeCheckinCheckoutRequestModel(
-      logType: json['logType'] ?? '',
+      logtype: json['log_type'] ?? '',
       time: json['time'] ?? '',
       image: json['image'] ?? '',
       imageOdo: json['imageOdo'] ?? '',
@@ -41,7 +41,7 @@ class EmployeeCheckinCheckoutRequestModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'logType': logType,
+      'log_type': logtype,
       'time': time,
       'image': image,
       'imageOdo': imageOdo,

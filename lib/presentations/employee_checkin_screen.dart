@@ -501,7 +501,7 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                                 state.imagePath!,
                                                                             imageOdo:
                                                                                 '',
-                                                                            logType:
+                                                                            logtype:
                                                                                 (empstate.emplyeestatusresponse?.message.message.currentStatus ==
                                                                                         null ||
                                                                                     empstate.emplyeestatusresponse?.message.message.currentStatus ==
@@ -531,9 +531,19 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                   );
                                                                 }
                                                               },
-                                                              child: Text(
-                                                                'Check ${empstate.emplyeestatusresponse?.message.message.currentStatus}',
-                                                              ),
+                                                              child:
+                                                                  empstate
+                                                                          .emplyeestatusresponse
+                                                                          ?.message
+                                                                          .message
+                                                                          .currentStatus ==
+                                                                      "IN"
+                                                                  ? Text(
+                                                                      'Check out',
+                                                                    )
+                                                                  : Text(
+                                                                      'Check In',
+                                                                    ),
                                                             );
                                                           },
                                                         );

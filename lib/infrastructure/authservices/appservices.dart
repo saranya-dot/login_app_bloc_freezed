@@ -137,9 +137,8 @@ class ApiService {
       final response = await _dio.get("v1.employee.get_checkin_status");
 
       final data = _decodeResponse(response.data);
-
+      log(" Decoded Response: $data");
       final employeeStatusResponse = EmployeeStatusResponse.fromJson(data);
-
       return employeeStatusResponse;
     } on DioException catch (e) {
       throw Exception(_handleError(e));
@@ -147,7 +146,7 @@ class ApiService {
   }
 
   // Employee Checkin / Checkout
-  Future<dynamic> empCheckinCheckout(
+  Future<Response> empCheckinCheckout(
     EmployeeCheckinCheckoutRequestModel request,
   ) async {
     try {
@@ -158,6 +157,7 @@ class ApiService {
       final data = _decodeResponse(response.data);
       log("Request Data: ${jsonEncode(request.toJson())}");
       log("Response Data: $data");
+      return response;
     } on DioException catch (e) {
       throw Exception(_handleError(e));
     }
