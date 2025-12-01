@@ -57,4 +57,9 @@ class Employeedb {
     }
     return null;
   }
+
+  Future<void> deleteEmployeeData() async {
+    final db = await database;
+    await db.delete('employee_data');
+  }
 }

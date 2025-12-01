@@ -23,7 +23,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             event.authrequestmodel,
           );
           final employeedb = Employeedb();
-          await employeedb.insertEmployeeData(authResponse);// insert auth response to sql 
+          await employeedb.insertEmployeeData(
+            authResponse,
+          ); // insert auth response to sql
 
           emit(
             state.copyWith(
@@ -81,6 +83,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         log("$e error occured");
         emit(state.copyWith(isError: true, isLoading: false));
+      }
+    });
+
+    on<LogOut>((event, emit) async {
+      emit(state.copyWith(isError: false, isLoading: true, isLoggedin: false));
+
+      try {
+        final storage = FlutterSecureStorage();
+        await storage.read(key: "auth_token");
+        await storage.delete(key: "auth_token");
+        final employeedb = Employeedb();
+        await employeedb.deleteEmployeeData();
+        emit(state.copyWith(isLggedout: true, isLoading: false));
+      } catch (e) {
+        log("$e error occured in user logged out ");
+        emit(
+          state.copyWith(isError: true, isLoading: false, isLggedout: false),
+        );
       }
     });
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
+import 'package:login_app_bloc_freezed/presentations/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -32,6 +34,26 @@ class ProfileScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                actions: [
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                      );
+                    },
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () async {
+                          BlocProvider.of<AuthBloc>(context).add((LogOut()));
+                        },
+                        icon: Icon(Icons.logout, color: Colors.white, size: 15),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 15),
+                ],
                 backgroundColor: Color.fromRGBO(20, 40, 56, 1),
               ),
 
