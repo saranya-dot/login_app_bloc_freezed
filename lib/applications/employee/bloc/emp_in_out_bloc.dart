@@ -41,24 +41,24 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
         log("$e error occured");
       }
     });
-    on<SelectVehicleEvent>((event, emit) async {
-      emit(state.copyWith(isError: false, isLoading: true));
-      try {
-        log("the event data : ${event.vehicle}");
-        emit(
-          state.copyWith(
-            isError: false,
-            isLoading: false,
-            selectedVehicle: event.vehicle,
-          ),
-        );
-      } catch (e) {
-        log("$e error occured");
-        emit(
-          state.copyWith(isError: false, isLoading: false, selectedVehicle: ''),
-        );
-      }
-    });
+    // on<SelectVehicleEvent>((event, emit) async {
+    //   emit(state.copyWith(isError: false, isLoading: true));
+    //   try {
+    //     log("the event data : ${event.vehicle}");
+    //     emit(
+    //       state.copyWith(
+    //         isError: false,
+    //         isLoading: false,
+    //         selectedVehicle: event.vehicle,
+    //       ),
+    //     );
+    //   } catch (e) {
+    //     log("$e error occured");
+    //     emit(
+    //       state.copyWith(isError: false, isLoading: false, selectedVehicle: ''),
+    //     );
+    //   }
+    // });
     on<EmployeeStatusCheck>((event, emit) async {
       try {
         emit(state.copyWith(isError: false, isLoading: true));

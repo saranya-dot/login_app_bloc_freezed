@@ -39,7 +39,7 @@ class ImagepickerBloc extends Bloc<ImagepickerEvent, ImagepickerState> {
             return;
           }
 
-          final bytes = await imageFile.readAsBytes();
+          // final bytes = await imageFile.readAsBytes();
 
           selectedImageBytes = base64Encode(compressedBytes);
           emit(
