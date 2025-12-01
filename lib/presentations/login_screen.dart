@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
+import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_elevator_btn.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_textformfield.dart';
-import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
+import 'package:login_app_bloc_freezed/domain/authrequestmodel.dart';
 import 'package:login_app_bloc_freezed/presentations/employee_checkin_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -76,6 +77,7 @@ class LoginScreen extends StatelessWidget {
                           context.read<EmpInOutBloc>().add(
                             EmployeeStatusCheck(),
                           );
+                          context.read<ProfileBloc>().add(GetEmpProfile());
                           Navigator.push(
                             context,
                             MaterialPageRoute(

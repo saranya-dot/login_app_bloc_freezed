@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/student/bloc/student_bloc.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_bottomsheet.dart';
-import 'package:login_app_bloc_freezed/models/studentmodel.dart';
+import 'package:login_app_bloc_freezed/domain/studentmodel.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});

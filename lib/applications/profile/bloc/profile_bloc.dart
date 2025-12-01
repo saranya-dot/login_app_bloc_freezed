@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:login_app_bloc_freezed/infrastructure/employeedb/employeedb.dart';
-import 'package:login_app_bloc_freezed/models/emp_profile_model.dart';
+import 'package:login_app_bloc_freezed/domain/emp_profile_model.dart';
 part 'profile_event.dart';
 part 'profile_state.dart';
 part 'profile_bloc.freezed.dart';

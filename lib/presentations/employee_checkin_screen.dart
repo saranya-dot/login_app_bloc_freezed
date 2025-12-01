@@ -4,11 +4,10 @@ import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/imagepicker/bloc/imagepicker_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
-import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
+import 'package:login_app_bloc_freezed/domain/empCheckInOut.dart';
 import 'package:login_app_bloc_freezed/presentations/profile_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -86,41 +85,50 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    BlocConsumer<ProfileBloc, ProfileState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Welcome Saranya 👋',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontWeight: FontWeight.w800,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Welcome ${state.empprofilemodel!.salesPerson}👋',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat(
+                                    'MMM dd yyyy',
+                                  ).format(DateTime.now()),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfileScreen(),
+                                  ),
+                                );
+                              },
+                              child: Lottie.asset(
+                                'assets/animation/profileperson.json',
+                                width: 50,
+                                height: 50,
+                                repeat: true,
                               ),
                             ),
-                            Text('Nov 27 2025'),
                           ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProfileScreen(),
-                              ),
-                            );
-                          },
-                          child: Lottie.asset(
-                            'assets/animation/profileperson.json',
-                            width: 50,
-                            height: 50,
-                            repeat: true,
-                          ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                     SizedBox(height: 10),
                     Divider(thickness: 0.5, color: Colors.white),

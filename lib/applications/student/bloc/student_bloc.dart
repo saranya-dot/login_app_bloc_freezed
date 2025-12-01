@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:login_app_bloc_freezed/infrastructure/studentdb/studentdb.dart';
-import 'package:login_app_bloc_freezed/models/studentmodel.dart';
+import 'package:login_app_bloc_freezed/domain/studentmodel.dart';
 
 part 'student_event.dart';
 part 'student_state.dart';

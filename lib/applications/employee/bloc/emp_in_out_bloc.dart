@@ -7,8 +7,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
 import 'package:login_app_bloc_freezed/infrastructure/get%20current%20location/get_location.dart';
-import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
-import 'package:login_app_bloc_freezed/models/empcheckresponse.dart';
+import 'package:login_app_bloc_freezed/domain/empCheckInOut.dart';
+import 'package:login_app_bloc_freezed/domain/empcheckresponse.dart';
 
 part 'emp_in_out_event.dart';
 part 'emp_in_out_state.dart';

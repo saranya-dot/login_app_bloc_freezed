@@ -3,10 +3,10 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:login_app_bloc_freezed/models/authrequestmodel.dart';
-import 'package:login_app_bloc_freezed/models/authresponsemodel.dart';
-import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
-import 'package:login_app_bloc_freezed/models/empcheckresponse.dart';
+import 'package:login_app_bloc_freezed/domain/authrequestmodel.dart';
+import 'package:login_app_bloc_freezed/domain/authresponsemodel.dart';
+import 'package:login_app_bloc_freezed/domain/empCheckInOut.dart';
+import 'package:login_app_bloc_freezed/domain/empcheckresponse.dart';
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:login_app_bloc_freezed/models/authresponsemodel.dart';
-import 'package:login_app_bloc_freezed/models/emp_profile_model.dart';
+import 'package:login_app_bloc_freezed/domain/authresponsemodel.dart';
+import 'package:login_app_bloc_freezed/domain/emp_profile_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

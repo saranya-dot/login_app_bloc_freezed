@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:login_app_bloc_freezed/models/studentmodel.dart';
+import 'package:login_app_bloc_freezed/domain/studentmodel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
