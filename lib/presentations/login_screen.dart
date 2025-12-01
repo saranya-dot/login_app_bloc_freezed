@@ -83,7 +83,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           );
                         }
-                        if (state.authresponsemodel == null) {
+                        if (state.authresponsemodel?.message?.salesPerson ==
+                                null ||
+                            state
+                                .authresponsemodel!
+                                .message
+                                .salesPerson!
+                                .isEmpty) {
                           AlertDialog(
                             title: Text("Warning"),
                             content: Text("Sales Person is missing !"),
