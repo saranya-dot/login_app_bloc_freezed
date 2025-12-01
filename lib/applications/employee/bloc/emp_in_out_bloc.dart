@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -22,6 +23,8 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
       Position position = await getlocation();
       double lat = position.latitude;
       double lon = position.longitude;
+      event.empcheckinout.latitude = lat;
+      event.empcheckinout.longitude = lon;
 
       try {
         log("time : ${event.empcheckinout.time.toString()}");
@@ -29,9 +32,11 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
         log('longitude: $lon');
 
         Response res = await EmpCheckinCheckoutApi().emppost(
-          "employee.employee_checkin",
+          "v1.employee.employee_checkin",
           event.empcheckinout.toJson(),
         );
+        log(jsonEncode(event.empcheckinout.toJson()));
+
         log("Response Data: ${res.data}");
         add(EmployeeStatusCheck());
         emit(
@@ -63,7 +68,7 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
       try {
         emit(state.copyWith(isError: false, isLoading: true));
         Response status = await EmpCheckinCheckoutStatus().empGet(
-          "employee.get_checkin_status",
+          "v1.employee.get_checkin_status",
         );
         log("employee status api call response : ${status.data}");
         try {

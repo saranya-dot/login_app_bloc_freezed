@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // };
         final storage = FlutterSecureStorage();
         Response res = await AuthenticationApi().authpost(
-          "auth.authenticate",
+          "v1.auth.authenticate",
           event.authrequestmodel.toMap(),
         ); // auth api called
         log("Response Data: ${res.data}"); // auth api response
