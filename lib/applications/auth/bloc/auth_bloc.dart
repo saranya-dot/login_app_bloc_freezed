@@ -95,11 +95,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await storage.delete(key: "auth_token");
         final employeedb = Employeedb();
         await employeedb.deleteEmployeeData();
-        emit(state.copyWith(isLggedout: true, isLoading: false));
+        emit(state.copyWith(isLoggedout: true, isLoading: false));
       } catch (e) {
         log("$e error occured in user logged out ");
         emit(
-          state.copyWith(isError: true, isLoading: false, isLggedout: false),
+          state.copyWith(isError: true, isLoading: false, isLoggedout: false),
         );
       }
     });

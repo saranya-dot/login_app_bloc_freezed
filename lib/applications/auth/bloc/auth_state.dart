@@ -11,7 +11,7 @@ sealed class AuthState with _$AuthState {
     AuthResponseModel? authresponsemodel,
     EmployeeStatusResponse?
     employeestatusresponse, // dont use this here ,change later
-    required bool? isLggedout,
+    required bool? isLoggedout,
   }) = _AuthState;
   factory AuthState.initial() {
     return AuthState(
@@ -20,7 +20,7 @@ sealed class AuthState with _$AuthState {
       isSuccess: false,
       successMessage: '',
       isLoggedin: false,
-      isLggedout: false,
+      isLoggedout: false,
     );
   }
 }

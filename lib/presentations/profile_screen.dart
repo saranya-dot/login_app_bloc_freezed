@@ -37,16 +37,17 @@ class ProfileScreen extends StatelessWidget {
                 actions: [
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      // TODO: implement listener
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => LoginScreen()),
-                      );
+                      if (state.isLoggedout!) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => LoginScreen()),
+                        );
+                      }
                     },
                     builder: (context, state) {
                       return IconButton(
                         onPressed: () async {
-                          BlocProvider.of<AuthBloc>(context).add((LogOut()));
+                          context.read<AuthBloc>().add(LogOut());
                         },
                         icon: Icon(Icons.logout, color: Colors.white, size: 15),
                       );
