@@ -4,10 +4,12 @@ import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/imagepicker/bloc/imagepicker_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/student/bloc/student_bloc.dart';
-import 'package:login_app_bloc_freezed/presentations/login_screen.dart';
+import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
 import 'package:login_app_bloc_freezed/presentations/splashscreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ApiService().init();
   runApp(const MyApp());
 }
 
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
         BlocProvider<EmpInOutBloc>(create: (context) => EmpInOutBloc()),
-        BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()), 
+        BlocProvider<ImagepickerBloc>(create: (context) => ImagepickerBloc()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

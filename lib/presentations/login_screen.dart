@@ -130,9 +130,22 @@ class LoginScreen extends StatelessWidget {
                                 log(usernameController.text);
                               }
                             },
-                            child: Text(
-                              'Login',
-                              style: TextStyle(color: Colors.white),
+                            child: BlocBuilder<AuthBloc, AuthState>(
+                              builder: (context, state) {
+                                return state.isLoading
+                                    ? SizedBox(
+                                        height: 22,
+                                        width: 22,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2.8,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Login',
+                                        style: TextStyle(color: Colors.white),
+                                      );
+                              },
                             ),
                           ),
                         );

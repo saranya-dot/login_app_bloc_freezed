@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:login_app_bloc_freezed/infrastructure/authservices/emp_checkin_checkout_api.dart';
-import 'package:login_app_bloc_freezed/infrastructure/authservices/emp_checkin_checkout_status.dart';
+import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
 import 'package:login_app_bloc_freezed/infrastructure/get%20current%20location/get_location.dart';
 import 'package:login_app_bloc_freezed/models/empCheckInOut.dart';
 import 'package:login_app_bloc_freezed/models/empcheckresponse.dart';
@@ -20,6 +18,7 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
   EmpInOutBloc() : super(EmpInOutState.initial()) {
     on<EmployeeCheckinCheckout>((event, emit) async {
       emit(state.copyWith(isError: false, isLoading: true));
+
       Position position = await getlocation();
       double lat = position.latitude;
       double lon = position.longitude;
@@ -30,14 +29,12 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
         log("time : ${event.empcheckinout.time.toString()}");
         log('latitude : $lat');
         log('longitude: $lon');
-
-        Response res = await EmpCheckinCheckoutApi().emppost(
-          "v1.employee.employee_checkin",
-          event.empcheckinout.toJson(),
+        Response employeeCheckinorOut = await ApiService().empCheckinCheckout(
+          event.empcheckinout,
         );
         log(jsonEncode(event.empcheckinout.toJson()));
 
-        log("Response Data: ${res.data}");
+        log("Api Response Data: $employeeCheckinorOut");
         add(EmployeeStatusCheck());
         emit(
           state.copyWith(isError: false, isLoading: false, lat: lat, lon: lon),
@@ -46,6 +43,9 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
         log("$e error occured");
       }
     });
+
+    //Not in use
+
     // on<SelectVehicleEvent>((event, emit) async {
     //   emit(state.copyWith(isError: false, isLoading: true));
     //   try {
@@ -67,20 +67,16 @@ class EmpInOutBloc extends Bloc<EmpInOutEvent, EmpInOutState> {
     on<EmployeeStatusCheck>((event, emit) async {
       try {
         emit(state.copyWith(isError: false, isLoading: true));
-        Response status = await EmpCheckinCheckoutStatus().empGet(
-          "v1.employee.get_checkin_status",
-        );
-        log("employee status api call response : ${status.data}");
+
         try {
-          EmployeeStatusResponse employeeStatusResponse =
-              EmployeeStatusResponse.fromJson(status.data);
+          final employeeStatusResponse = await ApiService().getEmployeeStatus();
           emit(state.copyWith(emplyeestatusresponse: employeeStatusResponse));
         } catch (e) {
-          print('error happen in employeeStatusResponse $e ');
+          log('error happen in employeeStatusResponse $e');
           emit(state.copyWith(emplyeestatusresponse: null, isError: true));
         }
       } catch (e) {
-        print('Employee status check api error $e');
+        log('Employee status check api error $e');
         emit(state.copyWith(isError: true));
       }
     });
