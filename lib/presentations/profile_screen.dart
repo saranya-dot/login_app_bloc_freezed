@@ -9,9 +9,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileBloc, ProfileState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, profilestate) {
         return BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {},
@@ -24,10 +22,15 @@ class ProfileScreen extends StatelessWidget {
                   'Profile Screen',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                leading: Icon(
-                  Icons.arrow_back_ios,
-                  size: 15,
-                  color: Colors.white,
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 15,
+                    color: Colors.white,
+                  ),
                 ),
                 backgroundColor: Color.fromRGBO(20, 40, 56, 1),
               ),

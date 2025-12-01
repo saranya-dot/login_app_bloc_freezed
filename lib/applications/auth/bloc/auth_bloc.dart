@@ -23,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             event.authrequestmodel,
           );
           final employeedb = Employeedb();
-          await employeedb.insertEmployeeData(authResponse);
+          await employeedb.insertEmployeeData(authResponse);// insert auth response to sql 
 
           emit(
             state.copyWith(
