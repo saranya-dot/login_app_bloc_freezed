@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:login_app_bloc_freezed/infrastructure/authservices/appservices.dart';
 import 'package:login_app_bloc_freezed/infrastructure/employeedb/employeedb.dart';
@@ -22,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           final authResponse = await ApiService().loginUser(
             event.authrequestmodel,
           );
+          log(jsonEncode(authResponse));
           final employeedb = Employeedb();
           await employeedb.insertEmployeeData(
             authResponse,
@@ -34,17 +37,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               isSuccess: authResponse.message.success,
               successMessage: authResponse.message.messageText,
               authresponsemodel: authResponse,
+              isLoading: false,
             ),
           );
         } catch (e) {
           log("check");
+
+          Fluttertoast.showToast(
+            msg: "Something wrong",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0,
+          );
+
           emit(
             state.copyWith(
               isError: true,
               isLoggedin: false,
               isSuccess: false,
-              successMessage: "something went wrong ",
+              successMessage: "Invalid credentials",
               authresponsemodel: null,
+              isLoading: false,
             ),
           );
         }
@@ -87,19 +102,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<LogOut>((event, emit) async {
-      emit(state.copyWith(isError: false, isLoading: true, isLoggedin: false));
+      emit(
+        state.copyWith(
+          isError: false,
+          isLoading: true,
+          isLoggedin: true,
+          isLoggedout: false,
+        ),
+      );
 
       try {
         final storage = FlutterSecureStorage();
-        await storage.read(key: "auth_token");
         await storage.delete(key: "auth_token");
         final employeedb = Employeedb();
         await employeedb.deleteEmployeeData();
-        emit(state.copyWith(isLoggedout: true, isLoading: false));
+        emit(
+          state.copyWith(
+            isLoggedout: true,
+            isLoading: false,
+            isLoggedin: false,
+            successMessage: 'successfully logged out',
+          ),
+        );
       } catch (e) {
         log("$e error occured in user logged out ");
         emit(
-          state.copyWith(isError: true, isLoading: false, isLoggedout: false),
+          state.copyWith(
+            isError: true,
+            isLoading: false,
+            isLoggedout: false,
+            isLoggedin: true,
+            successMessage: "error occured in user logged out",
+          ),
         );
       }
     });

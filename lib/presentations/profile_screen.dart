@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 import 'package:login_app_bloc_freezed/presentations/login_screen.dart';
@@ -13,115 +12,124 @@ class ProfileScreen extends StatelessWidget {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {},
       builder: (context, profilestate) {
-        return BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            final user = state.authresponsemodel?.message;
-
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text(
-                  'Profile Screen',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 15,
-                    color: Colors.white,
-                  ),
-                ),
-                actions: [
-                  BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state.isLoggedout!) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (_) => LoginScreen()),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      return IconButton(
-                        onPressed: () async {
-                          context.read<AuthBloc>().add(LogOut());
-                        },
-                        icon: Icon(Icons.logout, color: Colors.white, size: 15),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Profile Screen',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios, size: 15, color: Colors.white),
+            ),
+            actions: [
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state.isLoggedout) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => LoginScreen()),
+                      (route) => false,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  return IconButton(
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text("Logout?"),
+                          content: Text("Are you sure want to log out?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                context.read<AuthBloc>().add(LogOut());
+                              },
+                              child: const Text("Submit"),
+                            ),
+                          ],
+                        ),
                       );
+                      //
                     },
-                  ),
-                  SizedBox(width: 15),
-                ],
-                backgroundColor: Color.fromRGBO(20, 40, 56, 1),
+                    icon: Icon(Icons.logout, color: Colors.white, size: 15),
+                  );
+                },
               ),
+              SizedBox(width: 15),
+            ],
+            backgroundColor: Color.fromRGBO(20, 40, 56, 1),
+          ),
 
-              body: Container(
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+
+            // background image
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: const AssetImage('assets/images/nonn.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
                 width: double.infinity,
-                height: double.infinity,
-
-                // background image
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage('assets/images/nonn.png'),
-                    fit: BoxFit.cover,
-                  ),
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 5,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
 
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.85),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
-                          blurRadius: 5,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Profile Details",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Profile Details",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        InfoRow(
-                          title: "Sales Person",
-                          value: profilestate.empprofilemodel!.salesPerson,
-                        ),
-                        InfoRow(
-                          title: "Date of birth",
-                          value: profilestate.empprofilemodel!.dateOfBirth,
-                        ),
-                        InfoRow(
-                          title: "Department",
-                          value: profilestate.empprofilemodel!.department,
-                        ),
-                        InfoRow(
-                          title: "Designation",
-                          value: profilestate.empprofilemodel!.designation,
-                        ),
-                      ],
+                    const SizedBox(height: 20),
+                    InfoRow(
+                      title: "Sales Person",
+                      value: profilestate.empprofilemodel?.salesPerson ?? '',
                     ),
-                  ),
+                    InfoRow(
+                      title: "Date of birth",
+                      value: profilestate.empprofilemodel?.dateOfBirth ?? '',
+                    ),
+                    InfoRow(
+                      title: "Department",
+                      value: profilestate.empprofilemodel?.department ?? '',
+                    ),
+                    InfoRow(
+                      title: "Designation",
+                      value: profilestate.empprofilemodel?.designation ?? '',
+                    ),
+                  ],
                 ),
               ),
-            );
-          },
+            ),
+          ),
         );
       },
     );

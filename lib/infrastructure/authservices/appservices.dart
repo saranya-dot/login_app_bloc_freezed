@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_app_bloc_freezed/domain/authrequestmodel.dart';
 import 'package:login_app_bloc_freezed/domain/authresponsemodel.dart';
 import 'package:login_app_bloc_freezed/domain/empCheckInOut.dart';
+import 'package:login_app_bloc_freezed/domain/empcheckinoutresponsemodel.dart';
 import 'package:login_app_bloc_freezed/domain/empcheckresponse.dart';
 
 class ApiService {
@@ -19,7 +20,6 @@ class ApiService {
         onError: (e, handler) async {
           if (e.response?.statusCode == 401) {
             // Unauthorized → force logout
-            _token = null;
             _dio.options.headers.remove("Authorization");
           }
           handler.next(e);
@@ -34,13 +34,12 @@ class ApiService {
     BaseOptions(
       baseUrl: baseUrl,
       headers: {"Content-Type": "application/json"},
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 40),
-      sendTimeout: const Duration(seconds: 15),
+      // connectTimeout: const Duration(seconds: 15),
+      // receiveTimeout: const Duration(seconds: 40),
+      // sendTimeout: const Duration(seconds: 15),
     ),
   );
 
-  String? _token;
   final storage = const FlutterSecureStorage();
 
   Future<void> init() async {
@@ -52,7 +51,6 @@ class ApiService {
 
   void setToken(String token) async {
     if (token.isEmpty) return;
-    _token = token;
     _dio.options.headers["Authorization"] = "BASIC $token";
     await storage.write(key: "auth_token", value: token);
     log(" Token saved: $token");
@@ -72,7 +70,6 @@ class ApiService {
   String _handleError(DioException e) {
     if (e.response?.statusCode == 401) {
       // Unauthorized → force logout
-      _token = null;
       _dio.options.headers.remove("Authorization");
     }
 
@@ -121,12 +118,15 @@ class ApiService {
         "v1.auth.authenticate",
         data: request.toMap(),
       );
+      log("Response: ${response.data}");
       final data = _decodeResponse(response.data);
       log("Response Data: ${response.data}");
       final loginResponse = AuthResponseModel.fromJson(data);
       setToken(loginResponse.message.token);
       return loginResponse;
     } on DioException catch (e) {
+      log("Error data: ${(e).response?.data}");
+
       throw Exception(_handleError(e));
     }
   }
@@ -146,7 +146,7 @@ class ApiService {
   }
 
   // Employee Checkin / Checkout
-  Future<Response> empCheckinCheckout(
+  Future<EmployeeCheckinCheckoutResponse> empCheckinCheckout(
     EmployeeCheckinCheckoutRequestModel request,
   ) async {
     try {
@@ -157,7 +157,10 @@ class ApiService {
       final data = _decodeResponse(response.data);
       log("Request Data: ${jsonEncode(request.toJson())}");
       log("Response Data: $data");
-      return response;
+      final employeeCheckinCheckoutResponse =
+          EmployeeCheckinCheckoutResponse.fromJson(data);
+
+      return employeeCheckinCheckoutResponse;
     } on DioException catch (e) {
       throw Exception(_handleError(e));
     }

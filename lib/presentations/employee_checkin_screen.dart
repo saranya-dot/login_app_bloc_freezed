@@ -12,7 +12,7 @@ import 'package:login_app_bloc_freezed/presentations/profile_screen.dart';
 import 'package:lottie/lottie.dart';
 
 class EmployeeCheckinScreen extends StatefulWidget {
-  EmployeeCheckinScreen({super.key});
+  const EmployeeCheckinScreen({super.key});
 
   @override
   State<EmployeeCheckinScreen> createState() => _EmployeeCheckinScreenState();
@@ -28,7 +28,7 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
       context.read<ProfileBloc>().add(GetEmpProfile());
     });
     String? selectedVehicle;
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Stack(
@@ -95,7 +95,7 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Welcome ${state.empprofilemodel!.salesPerson}👋',
+                                  'Welcome ${state.empprofilemodel?.salesPerson}👋',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
@@ -208,7 +208,7 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                     ),
                                                   ),
                                                   content: Form(
-                                                    key: _formKey,
+                                                    key: formKey,
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
@@ -230,7 +230,9 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                               builder: (context, state) {
                                                                 Uint8List?
                                                                 imageBytes;
-                                                                if (state.imagePath !=
+                                                                if (state
+                                                                        .isImagepick &&
+                                                                    state.imagePath !=
                                                                         null &&
                                                                     state
                                                                         .imagePath!
@@ -286,7 +288,6 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                                 ),
                                                                               ),
                                                                               Positioned(
-                                                                                // top: -5,
                                                                                 right: -15,
                                                                                 bottom: -15,
 
@@ -335,95 +336,150 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                               },
                                                             ),
                                                             SizedBox(width: 10),
-                                                            BlocBuilder<
-                                                              EmpInOutBloc,
-                                                              EmpInOutState
-                                                            >(
-                                                              builder: (context, state) {
-                                                                return Column(
-                                                                  children: [
-                                                                    DropdownButton<
-                                                                      String
-                                                                    >(
-                                                                      hint: const Text(
-                                                                        "Select Vehicle Type",
-                                                                        style: TextStyle(
-                                                                          color:
-                                                                              Colors.black,
-                                                                          fontSize:
-                                                                              15,
-                                                                        ),
-                                                                      ),
+                                                            // BlocBuilder<
+                                                            //   EmpInOutBloc,
+                                                            //   EmpInOutState
+                                                            // >(
+                                                            //   builder: (context, state) {
+                                                            //     return Column(
+                                                            //       children: [
+                                                            //         DropdownButton<
+                                                            //           String
+                                                            //         >(
+                                                            //           hint: const Text(
+                                                            //             "Select Vehicle Type",
+                                                            //             style: TextStyle(
+                                                            //               color:
+                                                            //                   Colors.black,
+                                                            //               fontSize:
+                                                            //                   15,
+                                                            //             ),
+                                                            //           ),
 
-                                                                      value:
-                                                                          selectedVehicle,
-                                                                      borderRadius:
-                                                                          BorderRadius.all(
-                                                                            Radius.circular(
-                                                                              25,
-                                                                            ),
-                                                                          ),
-                                                                      items: const [
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "Car",
-                                                                          child: Text(
-                                                                            "Car",
-                                                                          ),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "Bike",
-                                                                          child: Text(
-                                                                            "Bike",
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                      onChanged: (value) {
-                                                                        // if (value != null) {
-                                                                        //   BlocProvider.of<
-                                                                        //         EmpInOutBloc
-                                                                        //       >(context)
-                                                                        //       .add(
-                                                                        //         (SelectVehicleEvent(
-                                                                        //           vehicle:
-                                                                        //               value,
-                                                                        //         )),
-                                                                        //       );
-                                                                        // }
-                                                                        setState(() {
-                                                                          selectedVehicle =
-                                                                              value;
-                                                                        });
-                                                                      },
+                                                            //           value:
+                                                            //               selectedVehicle,
+                                                            //           borderRadius:
+                                                            //               BorderRadius.all(
+                                                            //                 Radius.circular(
+                                                            //                   25,
+                                                            //                 ),
+                                                            //               ),
+                                                            //           items: const [
+                                                            //             DropdownMenuItem(
+                                                            //               value:
+                                                            //                   "Car",
+                                                            //               child: Text(
+                                                            //                 "Car",
+                                                            //               ),
+                                                            //             ),
+                                                            //             DropdownMenuItem(
+                                                            //               value:
+                                                            //                   "Bike",
+                                                            //               child: Text(
+                                                            //                 "Bike",
+                                                            //               ),
+                                                            //             ),
+                                                            //           ],
+                                                            //           onChanged: (value) {
+                                                            //             // if (value != null) {
+                                                            //             //   BlocProvider.of<
+                                                            //             //         EmpInOutBloc
+                                                            //             //       >(context)
+                                                            //             //       .add(
+                                                            //             //         (SelectVehicleEvent(
+                                                            //             //           vehicle:
+                                                            //             //               value,
+                                                            //             //         )),
+                                                            //             //       );
+                                                            //             // }
+                                                            //             setState(() {
+                                                            //               selectedVehicle =
+                                                            //                   value;
+                                                            //             });
+                                                            //           },
+                                                            //         ),
+                                                            //         if (selectedVehicle ==
+                                                            //             null)
+                                                            //           Padding(
+                                                            //             padding: EdgeInsets.only(
+                                                            //               top:
+                                                            //                   4,
+                                                            //             ),
+                                                            //             child: Text(
+                                                            //               "Required",
+                                                            //               style: TextStyle(
+                                                            //                 color:
+                                                            //                     Colors.red,
+                                                            //                 fontSize:
+                                                            //                     11,
+                                                            //               ),
+                                                            //             ),
+                                                            //           ),
+                                                            //       ],
+                                                            //     );
+                                                            //   },
+                                                            // ),
+                                                            SizedBox(
+                                                              width: 200,
+                                                              child: DropdownButtonFormField<String>(
+                                                                decoration:
+                                                                    const InputDecoration(
+                                                                      border:
+                                                                          OutlineInputBorder(),
                                                                     ),
-                                                                    // if (selectedVehicle ==
-                                                                    //     null)
-                                                                    //   Padding(
-                                                                    //     padding:
-                                                                    //         EdgeInsets.only(
-                                                                    //           top: 4,
-                                                                    //         ),
-                                                                    //     child: Text(
-                                                                    //       "Required",
-                                                                    //       style: TextStyle(
-                                                                    //         color: Colors
-                                                                    //             .red,
-                                                                    //         fontSize:
-                                                                    //             11,
-                                                                    //       ),
-                                                                    //     ),
-                                                                    //   ),
-                                                                  ],
-                                                                );
-                                                              },
+                                                                hint: const Text(
+                                                                  "Select Vehicle Type",
+                                                                  style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        15,
+                                                                  ),
+                                                                ),
+                                                                value:
+                                                                    selectedVehicle,
+                                                                borderRadius:
+                                                                    BorderRadius.all(
+                                                                      Radius.circular(
+                                                                        25,
+                                                                      ),
+                                                                    ),
+                                                                items: const [
+                                                                  DropdownMenuItem(
+                                                                    value:
+                                                                        "Car",
+                                                                    child: Text(
+                                                                      "Car",
+                                                                    ),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value:
+                                                                        "Bike",
+                                                                    child: Text(
+                                                                      "Bike",
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                                onChanged: (value) {
+                                                                  setState(() {
+                                                                    selectedVehicle =
+                                                                        value;
+                                                                  });
+                                                                },
+                                                                validator: (value) {
+                                                                  if (value ==
+                                                                      null) {
+                                                                    return "Required";
+                                                                  }
+                                                                  return null;
+                                                                },
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
 
                                                         SizedBox(height: 10),
 
-                                                        SizedBox(height: 10),
                                                         TextFormField(
                                                           validator: (value) {
                                                             if (value == null ||
@@ -482,13 +538,37 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                     >()
                                                                     .state
                                                                     .imagePath;
-                                                                if (_formKey
+                                                                if (formKey
                                                                         .currentState!
                                                                         .validate() &&
                                                                     selectedVehicle !=
                                                                         null &&
                                                                     image !=
                                                                         null) {
+                                                                  if (context
+                                                                          .read<
+                                                                            ImagepickerBloc
+                                                                          >()
+                                                                          .state
+                                                                          .imagePath ==
+                                                                      null) {
+                                                                    Padding(
+                                                                      padding:
+                                                                          EdgeInsets.only(
+                                                                            top:
+                                                                                4,
+                                                                          ),
+                                                                      child: Text(
+                                                                        "Required",
+                                                                        style: TextStyle(
+                                                                          color:
+                                                                              Colors.red,
+                                                                          fontSize:
+                                                                              11,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
                                                                   BlocProvider.of<
                                                                         EmpInOutBloc
                                                                       >(context)
@@ -508,10 +588,10 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                                         "OUT")
                                                                                 ? 'IN'
                                                                                 : 'OUT',
-                                                                            latitude:
-                                                                                empstate.lat,
-                                                                            longitude:
-                                                                                empstate.lon,
+                                                                            // latitude:
+                                                                            //     empstate.lat,
+                                                                            // longitude:
+                                                                            //     empstate.lon,
                                                                             odometerValue:
                                                                                 odoController.text,
 
@@ -526,9 +606,70 @@ class _EmployeeCheckinScreenState extends State<EmployeeCheckinScreen> {
                                                                           ),
                                                                         )),
                                                                       );
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
+                                                                  if (empstate
+                                                                      .isSuccess) {
+                                                                    Navigator.pop(
+                                                                      context,
+                                                                    );
+                                                                    ScaffoldMessenger.of(
+                                                                      context,
+                                                                    ).showSnackBar(
+                                                                      SnackBar(
+                                                                        content: Text(
+                                                                          empstate
+                                                                              .successMessage,
+                                                                          style: const TextStyle(
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                        backgroundColor:
+                                                                            Colors.black,
+                                                                      ),
+                                                                    );
+                                                                    //call the status check
+                                                                    context
+                                                                        .read<
+                                                                          EmpInOutBloc
+                                                                        >()
+                                                                        .add(
+                                                                          EmployeeStatusCheck(),
+                                                                        );
+                                                                  } else if (empstate
+                                                                          .isSuccess ==
+                                                                      false) {
+                                                                    Navigator.pop(
+                                                                      context,
+                                                                    );
+                                                                    ScaffoldMessenger.of(
+                                                                      context,
+                                                                    ).showSnackBar(
+                                                                      SnackBar(
+                                                                        content: Text(
+                                                                          empstate
+                                                                              .successMessage,
+                                                                          style: const TextStyle(
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                        backgroundColor:
+                                                                            Colors.white,
+                                                                      ),
+                                                                    );
+                                                                  }
+
+                                                                  odoController
+                                                                      .clear();
+                                                                  selectedVehicle =
+                                                                      '';
+                                                                  var image = context
+                                                                      .read<
+                                                                        ImagepickerBloc
+                                                                      >()
+                                                                      .state
+                                                                      .imagePath;
+                                                                  image = '';
                                                                 }
                                                               },
                                                               child:

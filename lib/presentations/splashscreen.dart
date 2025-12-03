@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
-import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
 import 'package:login_app_bloc_freezed/presentations/employee_checkin_screen.dart';
 import 'package:login_app_bloc_freezed/presentations/login_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -13,11 +12,9 @@ class Splashscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthBloc>().add(
-        SessionCheck(),
-      ); // token and get location event
       context.read<EmpInOutBloc>().add(EmployeeStatusCheck());
-      context.read<ProfileBloc>().add(GetEmpProfile());
+      context.read<AuthBloc>().add(SessionCheck());
+      // context.read<ProfileBloc>().add(GetEmpProfile());
     });
 
     return BlocListener<AuthBloc, AuthState>(

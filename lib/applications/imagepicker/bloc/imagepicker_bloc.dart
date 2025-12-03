@@ -26,31 +26,29 @@ class ImagepickerBloc extends Bloc<ImagepickerEvent, ImagepickerState> {
         final ext = picked!.path.split('.').last;
         print("File Extension = $ext");
 
-        if (picked != null) {
-          File imageFile = File(picked.path);
-          final compressedBytes = await FlutterImageCompress.compressWithFile(
-            imageFile.path,
-            quality: 40,
-            minWidth: 800,
-            minHeight: 800,
-          );
-          if (compressedBytes == null) {
-            emit(state.copyWith(isError: true));
-            return;
-          }
-
-          // final bytes = await imageFile.readAsBytes();
-
-          selectedImageBytes = base64Encode(compressedBytes);
-          emit(
-            state.copyWith(
-              imagePath: selectedImageBytes,
-              isImagepick: true,
-              isLoading: false,
-              fileType: ext,
-            ),
-          );
+        File imageFile = File(picked.path);
+        final compressedBytes = await FlutterImageCompress.compressWithFile(
+          imageFile.path,
+          quality: 40,
+          minWidth: 800,
+          minHeight: 800,
+        );
+        if (compressedBytes == null) {
+          emit(state.copyWith(isError: true));
+          return;
         }
+
+        // final bytes = await imageFile.readAsBytes();
+
+        selectedImageBytes = base64Encode(compressedBytes);
+        emit(
+          state.copyWith(
+            imagePath: selectedImageBytes,
+            isImagepick: true,
+            isLoading: false,
+            fileType: ext,
+          ),
+        );
       } catch (e) {
         log("Error picking image: $e");
         emit(state.copyWith(isError: true));

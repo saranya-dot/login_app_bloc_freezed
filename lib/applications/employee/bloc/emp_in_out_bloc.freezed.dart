@@ -368,7 +368,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 mixin _$EmpInOutState implements DiagnosticableTreeMixin {
 
- bool get isLoading; bool get isError; String? get selectedVehicle; double? get lat; double? get lon; EmployeeStatusResponse? get emplyeestatusresponse;
+ bool get isLoading; bool get isError; String? get selectedVehicle; EmployeeStatusResponse? get emplyeestatusresponse; bool get isSuccess; String get successMessage;
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -380,21 +380,21 @@ $EmpInOutStateCopyWith<EmpInOutState> get copyWith => _$EmpInOutStateCopyWithImp
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'EmpInOutState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse))..add(DiagnosticsProperty('isSuccess', isSuccess))..add(DiagnosticsProperty('successMessage', successMessage));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon,emplyeestatusresponse);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,emplyeestatusresponse,isSuccess,successMessage);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon, emplyeestatusresponse: $emplyeestatusresponse)';
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, emplyeestatusresponse: $emplyeestatusresponse, isSuccess: $isSuccess, successMessage: $successMessage)';
 }
 
 
@@ -405,7 +405,7 @@ abstract mixin class $EmpInOutStateCopyWith<$Res>  {
   factory $EmpInOutStateCopyWith(EmpInOutState value, $Res Function(EmpInOutState) _then) = _$EmpInOutStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon, EmployeeStatusResponse? emplyeestatusresponse
+ bool isLoading, bool isError, String? selectedVehicle, EmployeeStatusResponse? emplyeestatusresponse, bool isSuccess, String successMessage
 });
 
 
@@ -422,15 +422,15 @@ class _$EmpInOutStateCopyWithImpl<$Res>
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,Object? emplyeestatusresponse = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? emplyeestatusresponse = freezed,Object? isSuccess = null,Object? successMessage = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
-as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
-as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
-as double?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
-as EmployeeStatusResponse?,
+as String?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as bool,successMessage: null == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -512,10 +512,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  EmployeeStatusResponse? emplyeestatusresponse,  bool isSuccess,  String successMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EmpInOutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);case _:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.emplyeestatusresponse,_that.isSuccess,_that.successMessage);case _:
   return orElse();
 
 }
@@ -533,10 +533,10 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  bool isError,  String? selectedVehicle,  EmployeeStatusResponse? emplyeestatusresponse,  bool isSuccess,  String successMessage)  $default,) {final _that = this;
 switch (_that) {
 case _EmpInOutState():
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);}
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.emplyeestatusresponse,_that.isSuccess,_that.successMessage);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -550,10 +550,10 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String? selectedVehicle,  double? lat,  double? lon,  EmployeeStatusResponse? emplyeestatusresponse)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  bool isError,  String? selectedVehicle,  EmployeeStatusResponse? emplyeestatusresponse,  bool isSuccess,  String successMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _EmpInOutState() when $default != null:
-return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_that.lon,_that.emplyeestatusresponse);case _:
+return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.emplyeestatusresponse,_that.isSuccess,_that.successMessage);case _:
   return null;
 
 }
@@ -565,15 +565,15 @@ return $default(_that.isLoading,_that.isError,_that.selectedVehicle,_that.lat,_t
 
 
 class _EmpInOutState with DiagnosticableTreeMixin implements EmpInOutState {
-   _EmpInOutState({required this.isLoading, required this.isError, required this.selectedVehicle, required this.lat, required this.lon, required this.emplyeestatusresponse});
+   _EmpInOutState({required this.isLoading, required this.isError, required this.selectedVehicle, required this.emplyeestatusresponse, required this.isSuccess, required this.successMessage});
   
 
 @override final  bool isLoading;
 @override final  bool isError;
 @override final  String? selectedVehicle;
-@override final  double? lat;
-@override final  double? lon;
 @override final  EmployeeStatusResponse? emplyeestatusresponse;
+@override final  bool isSuccess;
+@override final  String successMessage;
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
@@ -586,21 +586,21 @@ _$EmpInOutStateCopyWith<_EmpInOutState> get copyWith => __$EmpInOutStateCopyWith
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'EmpInOutState'))
-    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('lat', lat))..add(DiagnosticsProperty('lon', lon))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse));
+    ..add(DiagnosticsProperty('isLoading', isLoading))..add(DiagnosticsProperty('isError', isError))..add(DiagnosticsProperty('selectedVehicle', selectedVehicle))..add(DiagnosticsProperty('emplyeestatusresponse', emplyeestatusresponse))..add(DiagnosticsProperty('isSuccess', isSuccess))..add(DiagnosticsProperty('successMessage', successMessage));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmpInOutState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.selectedVehicle, selectedVehicle) || other.selectedVehicle == selectedVehicle)&&(identical(other.emplyeestatusresponse, emplyeestatusresponse) || other.emplyeestatusresponse == emplyeestatusresponse)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.successMessage, successMessage) || other.successMessage == successMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,lat,lon,emplyeestatusresponse);
+int get hashCode => Object.hash(runtimeType,isLoading,isError,selectedVehicle,emplyeestatusresponse,isSuccess,successMessage);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, lat: $lat, lon: $lon, emplyeestatusresponse: $emplyeestatusresponse)';
+  return 'EmpInOutState(isLoading: $isLoading, isError: $isError, selectedVehicle: $selectedVehicle, emplyeestatusresponse: $emplyeestatusresponse, isSuccess: $isSuccess, successMessage: $successMessage)';
 }
 
 
@@ -611,7 +611,7 @@ abstract mixin class _$EmpInOutStateCopyWith<$Res> implements $EmpInOutStateCopy
   factory _$EmpInOutStateCopyWith(_EmpInOutState value, $Res Function(_EmpInOutState) _then) = __$EmpInOutStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, bool isError, String? selectedVehicle, double? lat, double? lon, EmployeeStatusResponse? emplyeestatusresponse
+ bool isLoading, bool isError, String? selectedVehicle, EmployeeStatusResponse? emplyeestatusresponse, bool isSuccess, String successMessage
 });
 
 
@@ -628,15 +628,15 @@ class __$EmpInOutStateCopyWithImpl<$Res>
 
 /// Create a copy of EmpInOutState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? lat = freezed,Object? lon = freezed,Object? emplyeestatusresponse = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? isError = null,Object? selectedVehicle = freezed,Object? emplyeestatusresponse = freezed,Object? isSuccess = null,Object? successMessage = null,}) {
   return _then(_EmpInOutState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,selectedVehicle: freezed == selectedVehicle ? _self.selectedVehicle : selectedVehicle // ignore: cast_nullable_to_non_nullable
-as String?,lat: freezed == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
-as double?,lon: freezed == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
-as double?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
-as EmployeeStatusResponse?,
+as String?,emplyeestatusresponse: freezed == emplyeestatusresponse ? _self.emplyeestatusresponse : emplyeestatusresponse // ignore: cast_nullable_to_non_nullable
+as EmployeeStatusResponse?,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as bool,successMessage: null == successMessage ? _self.successMessage : successMessage // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

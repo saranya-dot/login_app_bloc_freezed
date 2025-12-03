@@ -5,29 +5,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/auth/bloc/auth_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/employee/bloc/emp_in_out_bloc.dart';
 import 'package:login_app_bloc_freezed/applications/profile/bloc/profile_bloc.dart';
-import 'package:login_app_bloc_freezed/common_widgtes/common_elevator_btn.dart';
 import 'package:login_app_bloc_freezed/common_widgtes/common_textformfield.dart';
 import 'package:login_app_bloc_freezed/domain/authrequestmodel.dart';
 import 'package:login_app_bloc_freezed/presentations/employee_checkin_screen.dart';
 import 'package:lottie/lottie.dart';
 
-class LoginScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthBloc>().add(
-        SessionCheck(),
-      ); // token and get location event
-      context.read<EmpInOutBloc>().add(
-        EmployeeStatusCheck(),
-      ); // emp checked in or out status check event
-    });
-    final TextEditingController usernameController = TextEditingController();
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-    final TextEditingController passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController usernameController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       body: Padding(
@@ -72,46 +75,53 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     BlocConsumer<AuthBloc, AuthState>(
                       listener: (context, state) {
-                        if (state.isSuccess &&
-                            state.authresponsemodel != null) {
-                          context.read<EmpInOutBloc>().add(
-                            EmployeeStatusCheck(),
-                          );
-                          context.read<ProfileBloc>().add(GetEmpProfile());
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EmployeeCheckinScreen(),
-                            ),
-                          );
-                        }
-                        if (state.authresponsemodel?.message?.salesPerson ==
-                                null ||
-                            state
+                        if (!state.isLoading) {
+                          if (state.isSuccess &&
+                              state.authresponsemodel != null) {
+                            if (state
                                 .authresponsemodel!
                                 .message
-                                .salesPerson!
+                                .salesPerson
                                 .isEmpty) {
-                          AlertDialog(
-                            title: Text("Warning"),
-                            content: Text("Sales Person is missing !"),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(context),
-                                child: const Text("Ok"),
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text("Warning"),
+                                  content: Text("Sales Person is missing!"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text("Ok"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
+
+                            context.read<EmpInOutBloc>().add(
+                              EmployeeStatusCheck(),
+                            );
+                            context.read<ProfileBloc>().add(GetEmpProfile());
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  state.successMessage,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                backgroundColor: Colors.white,
                               ),
-                            ],
-                          );
+                            );
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EmployeeCheckinScreen(),
+                              ),
+                            );
+                          }
                         }
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              state.successMessage,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            backgroundColor: Colors.white,
-                          ),
-                        );
                       },
                       builder: (context, state) {
                         return SizedBox(
@@ -126,39 +136,123 @@ class LoginScreen extends StatelessWidget {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                BlocProvider.of<AuthBloc>(context).add(
-                                  (LogIn(
+                                context.read<AuthBloc>().add(
+                                  LogIn(
                                     authrequestmodel: AuthRequestModel(
                                       username: usernameController.text,
                                       password: passwordController.text,
                                     ),
-                                  )),
+                                  ),
                                 );
-
-                                log(usernameController.text);
                               }
                             },
-                            child: BlocBuilder<AuthBloc, AuthState>(
-                              builder: (context, state) {
-                                return state.isLoading
-                                    ? SizedBox(
-                                        height: 22,
-                                        width: 22,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 2.8,
-                                        ),
-                                      )
-                                    : Text(
-                                        'Login',
-                                        style: TextStyle(color: Colors.white),
-                                      );
-                              },
-                            ),
+                            child: state.isLoading
+                                ? SizedBox(
+                                    height: 22,
+                                    width: 22,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2.8,
+                                    ),
+                                  )
+                                : Text(
+                                    'Login',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                           ),
                         );
                       },
                     ),
+
+                    // BlocConsumer<AuthBloc, AuthState>(
+                    //   listener: (context, state) {
+                    //     if (state.isSuccess &&
+                    //         state.authresponsemodel != null) {
+                    //       context.read<EmpInOutBloc>().add(
+                    //         EmployeeStatusCheck(),
+                    //       );
+                    //       context.read<ProfileBloc>().add(GetEmpProfile());
+                    //       ScaffoldMessenger.of(context).showSnackBar(
+                    //         SnackBar(
+                    //           content: Text(
+                    //             state.successMessage,
+                    //             style: TextStyle(color: Colors.black),
+                    //           ),
+                    //           backgroundColor: Colors.white,
+                    //         ),
+                    //       );
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //           builder: (context) => EmployeeCheckinScreen(),
+                    //         ),
+                    //       );
+                    //     }
+                    //     if (state.authresponsemodel?.message.salesPerson ==
+                    //             null ||
+                    //         state
+                    //             .authresponsemodel!
+                    //             .message
+                    //             .salesPerson
+                    //             .isEmpty) {
+                    //       AlertDialog(
+                    //         title: Text("Warning"),
+                    //         content: Text("Sales Person is missing !"),
+                    //         actions: [
+                    //           TextButton(
+                    //             onPressed: () => Navigator.pop(context),
+                    //             child: const Text("Ok"),
+                    //           ),
+                    //         ],
+                    //       );
+                    //     }
+                    //   },
+                    //   builder: (context, state) {
+                    //     return SizedBox(
+                    //       width: 500,
+                    //       height: 50,
+                    //       child: ElevatedButton(
+                    //         style: ElevatedButton.styleFrom(
+                    //           backgroundColor: Color.fromRGBO(20, 40, 56, 1),
+                    //           shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.circular(10),
+                    //           ),
+                    //         ),
+                    //         onPressed: () {
+                    //           if (_formKey.currentState!.validate()) {
+                    //             BlocProvider.of<AuthBloc>(context).add(
+                    //               (LogIn(
+                    //                 authrequestmodel: AuthRequestModel(
+                    //                   username: usernameController.text,
+                    //                   password: passwordController.text,
+                    //                 ),
+                    //               )),
+                    //             );
+
+                    //             log(usernameController.text);
+                    //           }
+                    //         },
+                    //         child: BlocBuilder<AuthBloc, AuthState>(
+                    //           builder: (context, state) {
+                    //             return state.isLoading
+                    //                 ? SizedBox(
+                    //                     height: 22,
+                    //                     width: 22,
+                    //                     child: CircularProgressIndicator(
+                    //                       color: Colors.white,
+                    //                       strokeWidth: 2.8,
+                    //                     ),
+                    //                   )
+                    //                 : Text(
+                    //                     'Login',
+                    //                     style: TextStyle(color: Colors.white),
+                    //                   );
+                    //           },
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               ),

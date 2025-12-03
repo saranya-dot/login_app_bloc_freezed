@@ -9,9 +9,7 @@ sealed class AuthState with _$AuthState {
     required String successMessage,
     required bool isLoggedin,
     AuthResponseModel? authresponsemodel,
-    EmployeeStatusResponse?
-    employeestatusresponse, // dont use this here ,change later
-    required bool? isLoggedout,
+    required bool isLoggedout,
   }) = _AuthState;
   factory AuthState.initial() {
     return AuthState(
